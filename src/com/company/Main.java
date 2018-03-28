@@ -51,7 +51,7 @@ public class Main{
     }
 */
     public static void main(String[] args) {
-        new WindowBasic();
+        new WindowBasic(8,8);
 
     }
 
