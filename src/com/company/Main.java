@@ -15,7 +15,7 @@ public class Main{
 
 //    boolean player;
  //   int x = 0, y = 0;
-    JFrame window = new JFrame("Реверси");
+
  /**   JButton[][] grid;
     int[][] state;
     File fileBlack = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Black.jpg");
@@ -47,14 +47,12 @@ public class Main{
         state[4][4] = 2;
         state[3][4] = 1;
         state[4][3] = 1;
-        window.setSize(450, 450);
-        window.setResizable(false);
-        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.setVisible(true);
+
     }
 */
-    public static void main(String[] args) throws IOException {
-        new Main();
+    public static void main(String[] args) {
+        new WindowBasic();
+
     }
 
  /**   public void step(int x, int y, boolean player, boolean test) {
