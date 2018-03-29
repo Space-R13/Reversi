@@ -11,7 +11,7 @@ import java.lang.*;
 import java.util.ArrayList;
 
 
-public class Main{
+public class Main {
 
 //    boolean player;
  //   int x = 0, y = 0;
