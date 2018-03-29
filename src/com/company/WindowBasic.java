@@ -18,7 +18,7 @@ public class WindowBasic extends Frame{
         winBas(frame.getContentPane());
         frame.pack();
         frame.setVisible(true);
-        frame.setSize(500,510);
+        frame.setSize(300,310);
         frame.setResizable(false);
     }
 
@@ -43,12 +43,14 @@ public class WindowBasic extends Frame{
         container.add(panel, constraints);
 
         score = new JTextField(5);
+        score.setEnabled(false);
         panel.add(score);
         constraints.gridx = 1;
         constraints.gridy = 0;
         container.add(score, constraints);
 
         player = new JTextField(5);
+        player.setEnabled(false);
         panel.add(player);
         constraints.gridx = 2;
         constraints.gridy = 0;
@@ -70,6 +72,7 @@ public class WindowBasic extends Frame{
             }
         }
         constraints.weightx = 0.0;
+        constraints.gridwidth = 4;
         constraints.gridx = 0;    // нулевая ячейка по горизонтали
         constraints.gridy = 1;    // первая ячейка по вертикали
         container.add(panel, constraints);
