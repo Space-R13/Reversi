@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -18,7 +19,7 @@ public class WindowBasic extends Frame{
         winBas(frame.getContentPane());
         frame.pack();
         frame.setVisible(true);
-        frame.setSize(300,310);
+        frame.setSize(340,360);
         frame.setResizable(false);
     }
 
@@ -31,7 +32,7 @@ public class WindowBasic extends Frame{
         container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         container.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
-    //    constraints.weightx = 0.5;
+    //  constraints.weightx = 0.5;
         constraints.gridy = 0;
         constraints.gridx = 0;
 
@@ -44,6 +45,7 @@ public class WindowBasic extends Frame{
 
         score = new JTextField(5);
         score.setEnabled(false);
+        score.setText("Score");
         panel.add(score);
         constraints.gridx = 1;
         constraints.gridy = 0;
@@ -51,6 +53,7 @@ public class WindowBasic extends Frame{
 
         player = new JTextField(5);
         player.setEnabled(false);
+        player.setText("Player");
         panel.add(player);
         constraints.gridx = 2;
         constraints.gridy = 0;
@@ -64,6 +67,7 @@ public class WindowBasic extends Frame{
 
         JButton[][] buttonG = new JButton[8][8];
         panel = new JPanel(new GridLayout(8,8));
+        panel.setPreferredSize(new Dimension(270,270));
         for (x = 0; x < 8; x++) {
             for (y = 0; y < 8; y++) {
                 buttonG[x][y] = new JButton();
