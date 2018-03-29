@@ -19,7 +19,7 @@ public class WindowBasic extends Frame{
         winBas(frame.getContentPane());
         frame.pack();
         frame.setVisible(true);
-        frame.setSize(340,360);
+        frame.setSize(300,360);
         frame.setResizable(false);
     }
 
