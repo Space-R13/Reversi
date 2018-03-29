@@ -3,14 +3,33 @@ package com.company;
 import javax.swing.*;
 import java.awt.*;
 
-public class GridField {
+public class GridField implements LayoutManager {
     public GridField(int x, int y){
-       /** for (x = 0; x < 8; x++ ) {
-            for (y = 0; y < 8; y++) {
-                JButton[][] buttonG = new JButton[x][y];
-            }
-        }*/
+        GridLayout grid = new GridLayout(x,y);
+    }
+
+    @Override
+    public void addLayoutComponent(String name, Component comp) {
 
     }
 
+    @Override
+    public void removeLayoutComponent(Component comp) {
+
+    }
+
+    @Override
+    public Dimension preferredLayoutSize(Container parent) {
+        return null;
+    }
+
+    @Override
+    public Dimension minimumLayoutSize(Container parent) {
+        return null;
+    }
+
+    @Override
+    public void layoutContainer(Container parent) {
+
+    }
 }
