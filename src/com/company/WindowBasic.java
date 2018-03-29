@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 public class WindowBasic extends Frame{
 
 
-    public WindowBasic() {
+    private WindowBasic() {
    /**     JFrame windowB = new JFrame("Реверси");
         windowB.setSize(500,500);
         windowB.setVisible(true);
@@ -30,7 +30,7 @@ public class WindowBasic extends Frame{
         frame.setResizable(false);
     }
 
-    public void winBas(Container container){
+    private void winBas(Container container){
         int x , y;
         JButton button = new JButton();
         JTextField player, score;
@@ -82,6 +82,7 @@ public class WindowBasic extends Frame{
         constraints.gridwidth = 1;
         constraints.gridx = 0;    // нулевая ячейка по горизонтали
         constraints.gridy = 1;    // первая ячейка по вертикали
+
         container.setLayout(new GridLayout(8,8));
 
         for ( x = 0; x < 8; x++ ) {
