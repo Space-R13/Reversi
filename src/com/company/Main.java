@@ -1,17 +1,11 @@
 package com.company;
 
-import javafx.scene.layout.Border;
-
-import java.awt.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.event.*;
-import java.io.*;
+import java.io.IOException;
 import java.lang.*;
-import java.util.ArrayList;
 
 
-public class Main {
+public class Main{
 
 //    boolean player;
  //   int x = 0, y = 0;
@@ -50,7 +44,7 @@ public class Main {
 
     }
 */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new WindowBasic();
 
     }
