@@ -11,6 +11,15 @@ import java.text.AttributedCharacterIterator;
 
 public class WindowBasic extends Frame{
 
+    private JPanel panel;
+    private JButton res;
+    private JButton clo;
+    private JTextField player, score;
+    private int x, y;
+    private final int playerBlack = 0, playerWhite = 1;
+    private JButton[][] buttonG;
+    private int round = 1;
+    private Timer timeRound;
 
     public WindowBasic() throws IOException {
 
@@ -25,13 +34,6 @@ public class WindowBasic extends Frame{
     }
 
     private void winBas(Container container) throws IOException {
-        int x, y;
-        int playerBlack = 0, playerWhite = 1;
-        Graphics g;
-        JPanel panel;
-        JButton res;
-        JButton clo;
-        JTextField player, score;
         container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         container.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
@@ -68,7 +70,7 @@ public class WindowBasic extends Frame{
         constraints.gridy = 0;
         container.add(clo, constraints);
 
-        JButton[][] buttonG = new JButton[8][8];
+        buttonG = new JButton[8][8];
         panel = new JPanel(new GridLayout(8,8));
         panel.setPreferredSize(new Dimension(270,270));
         for (x = 0; x < 8; x++) {
@@ -94,6 +96,37 @@ public class WindowBasic extends Frame{
         buttonG[4][3].setIcon(black);
         buttonG[4][4].setIcon(white);
 
+
+    }
+
+    void platerStep(int round){
+        switch (round){
+            case playerBlack:
+                round = playerWhite; // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
+                player.setText("White");
+                break;
+            case playerWhite:
+                round = playerBlack;
+                player.setText("Black");
+                break;
+        }
+    }
+
+    void stepBlack(){
+      /**  Boolean b;
+        Если b=true(включить),Если b=false(выключить);
+        jButton2.setEnabled(b);
+       также таймер обозначит на минуту в score
+       определение ходов используя операции с массивом, определить адрес и значения в клетках рядом, определить в какие клетки можно поставить фишку.
+       А именно если клетка рядом пустая, если клетка рядом занята белыми, если клетка рядом занята чёрными. Заблокировать клетки далёкие.
+       Не использовать mouseListener, программа сама определяет возможные ходы, помечая клетки цветом. добавление иконок на кнопку можно реализовать с помощью метода действия при нажатии кнопки.
+       После того как походил игрок, необходимо переопределить иконки для клеток.
+
+
+       */
+    }
+
+    void stepWhite(){
 
     }
 
