@@ -20,10 +20,16 @@ public class WindowBasic extends Frame{
     private JTextField player, score;
     private int rows, cols;
     private final int playerBlack = 0, playerWhite = 1;
-    private JButton buttonG;
+    private JButton[][] buttonG;
     private int round = 1;
     private int whiteP, blackP;
     private int [][] number;
+    private File fileBlack = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Black.jpg");
+    private Image imageBlack = ImageIO.read(fileBlack);
+    private File fileWhite = new File(System.getProperty("user.dir") + "/src/com/company/jpg/White.jpg");
+    private Image imageWhite = ImageIO.read(fileWhite);
+    private Icon white = new ImageIcon(imageWhite);
+    private Icon black = new ImageIcon(imageBlack);
     private Timer timeRound;
     private Color color = new Color(230,191,0);
 
@@ -46,6 +52,9 @@ public class WindowBasic extends Frame{
     }
 
     private void winBas(Container container) throws IOException {
+
+
+
         container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         container.setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();
@@ -82,23 +91,23 @@ public class WindowBasic extends Frame{
         constraints.gridy = 0;
         container.add(clo, constraints);
 
+        buttonG = new JButton[8][8];
         number = new int[8][8];
         panel = new JPanel(new GridLayout(8, 8));
         panel.setPreferredSize(new Dimension(270, 270));
         for (rows = 0; rows < 8; rows++) {
             for (cols = 0; cols < 8; cols++) {
+                buttonG[rows][cols] = new JButton(Integer.toString(number[rows][cols]));
                 number[rows][cols] = 0;
-                buttonG = new JButton(Integer.toString(number[rows][cols]));
-                buttonG.addActionListener(new PositionAwareActionListener(rows, cols));
-                buttonG.setBackground(color);
-          //      buttonG.setEnabled(false);
-                panel.add(buttonG);
-                if (number[rows][cols] == 0) {
-                    buttonG.setEnabled(false); // сокрытие нулевого елемента массива
+                buttonG[rows][cols].addActionListener(new PositionAwareActionListener(rows, cols));
+                buttonG[rows][cols].setBackground(color);
+                buttonG[rows][cols].setEnabled(false);
+                panel.add(buttonG[rows][cols]);
+             /**   if (number[rows][cols] == 0) {
+                    buttonG[rows][cols].setEnabled(false); // сокрытие нулевого елемента массива
                 } else
-                    buttonG.addActionListener(new PositionAwareActionListener(rows, cols));
-
-          //      number[rows][cols] = Integer.parseInt(String.valueOf(number[rows][cols]));
+                    buttonG[rows][cols].addActionListener(new PositionAwareActionListener(rows, cols));
+                */
             }
         }
         constraints.weightx = 0.0;
@@ -106,18 +115,19 @@ public class WindowBasic extends Frame{
         constraints.gridx = 0;    // нулевая ячейка по горизонтали
         constraints.gridy = 1;    // первая ячейка по вертикали
         container.add(panel, constraints);
-        File fileBlack = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Black.jpg");
-        Image imageBlack = ImageIO.read(fileBlack);
-        File fileWhite = new File(System.getProperty("user.dir") + "/src/com/company/jpg/White.jpg");
-        Image imageWhite = ImageIO.read(fileWhite);
-        Icon white = new ImageIcon(imageWhite);
-        Icon black = new ImageIcon(imageBlack);
+
+        buttonG[3][3].setIcon(white);
+        buttonG[3][3].setEnabled(true);
+       // buttonG[3][3] = new JButton(Integer.toString(number[3][3]));
+       // buttonG[3][3].setIcon(black);
+        buttonG[3][4].setIcon(black);
+        buttonG[3][4].setEnabled(true);
+        buttonG[4][3].setIcon(black);
+        buttonG[4][3].setEnabled(true);
+        buttonG[4][4].setIcon(white);
+        buttonG[4][4].setEnabled(true);
 
 
-     //   number[3][3] =
-        number[3][4] = blackP;
-        number[4][3] = whiteP;
-        number[4][4] = blackP;
 /**
         buttonG.setEnabled();
         number[3][4].setEnabled(true);
@@ -144,7 +154,26 @@ public class WindowBasic extends Frame{
         }
     }
 
+
+    void step() {
+
+        for (rows = 0; rows < 8; rows++) {
+            for (cols = 0; cols < 8; cols++) {
+                buttonG[rows][cols] = new JButton();
+                if (buttonG[rows][cols] == null){
+                  buttonG[rows][cols].setEnabled(false);
+                }
+                if (buttonG[rows][cols] == buttonG[rows][cols].getIcon()){
+
+                }
+
+                }
+            }
+        }
+
+
     void stepBlack(){
+
       /**  Boolean b;
         Если b=true(включить),Если b=false(выключить);
         jButton2.setEnabled(b);
