@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.AttributedCharacterIterator;
 
 public class WindowBasic extends Frame{
@@ -22,7 +23,7 @@ public class WindowBasic extends Frame{
     private JButton buttonG;
     private int round = 1;
     private int whiteP, blackP;
-    private int[][] number;
+    private int [][] number;
     private Timer timeRound;
     private Color color = new Color(230,191,0);
 
@@ -61,7 +62,7 @@ public class WindowBasic extends Frame{
 
         score = new JTextField(5);
         score.setEnabled(false);
-        score.setText("Score");
+        score.setText("Time");
         panel.add(score);
         constraints.gridx = 1;
         constraints.gridy = 0;
@@ -90,30 +91,30 @@ public class WindowBasic extends Frame{
                 buttonG = new JButton(Integer.toString(number[rows][cols]));
                 buttonG.addActionListener(new PositionAwareActionListener(rows, cols));
                 buttonG.setBackground(color);
-                buttonG.setEnabled(false);
+          //      buttonG.setEnabled(false);
                 panel.add(buttonG);
+                if (number[rows][cols] == 0) {
+                    buttonG.setEnabled(false); // сокрытие нулевого елемента массива
+                } else
+                    buttonG.addActionListener(new PositionAwareActionListener(rows, cols));
+
+          //      number[rows][cols] = Integer.parseInt(String.valueOf(number[rows][cols]));
             }
         }
-
-
-     /**for (rows = 0; rows < 8; rows++){
-            for (cols = 0; rows < 8; cols++){
-
-            }
-        }*/
-
         constraints.weightx = 0.0;
         constraints.gridwidth = 4;
         constraints.gridx = 0;    // нулевая ячейка по горизонтали
         constraints.gridy = 1;    // первая ячейка по вертикали
         container.add(panel, constraints);
         File fileBlack = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Black.jpg");
-  //      Image imageBlack = ImageIO.read(fileBlack);
+        Image imageBlack = ImageIO.read(fileBlack);
         File fileWhite = new File(System.getProperty("user.dir") + "/src/com/company/jpg/White.jpg");
-  //      Image imageWhite = ImageIO.read(fileWhite);
-  //      Icon white = new ImageIcon(imageWhite);
- //       Icon black = new ImageIcon(imageBlack);
-        number[3][3] = whiteP;
+        Image imageWhite = ImageIO.read(fileWhite);
+        Icon white = new ImageIcon(imageWhite);
+        Icon black = new ImageIcon(imageBlack);
+
+
+     //   number[3][3] =
         number[3][4] = blackP;
         number[4][3] = whiteP;
         number[4][4] = blackP;
