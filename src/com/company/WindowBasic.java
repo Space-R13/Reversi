@@ -4,6 +4,8 @@ package com.company;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +17,7 @@ public class WindowBasic extends Frame{
     private JButton res;
     private JButton clo;
     private JTextField player, score;
-    private int x, y;
+    private int rows, cols;
     private final int playerBlack = 0, playerWhite = 1;
     private JButton[][] buttonG;
     private int round = 1;
@@ -31,6 +33,11 @@ public class WindowBasic extends Frame{
         frame.setVisible(true);
         frame.setSize(300,360);
         frame.setResizable(false);
+        frame.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(e);
+            }
+        });
     }
 
     private void winBas(Container container) throws IOException {
@@ -73,11 +80,11 @@ public class WindowBasic extends Frame{
         buttonG = new JButton[8][8];
         panel = new JPanel(new GridLayout(8,8));
         panel.setPreferredSize(new Dimension(270,270));
-        for (x = 0; x < 8; x++) {
-            for (y = 0; y < 8; y++) {
-                buttonG[x][y] = new JButton();
-                buttonG[x][y].addActionListener(new PositionAwareActionListener(x, y));
-                panel.add(buttonG[x][y]);
+        for (rows = 0; rows < 8; rows++) {
+            for (cols = 0; cols < 8; cols++) {
+                buttonG[rows][cols] = new JButton();
+                buttonG[rows][cols].addActionListener(new PositionAwareActionListener(rows, cols));
+                panel.add(buttonG[rows][cols]);
             }
         }
         constraints.weightx = 0.0;
