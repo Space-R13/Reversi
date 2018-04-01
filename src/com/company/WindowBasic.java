@@ -12,16 +12,20 @@ import java.io.IOException;
 import java.text.AttributedCharacterIterator;
 
 public class WindowBasic extends Frame{
-
+    private GridBagConstraints constraints;
     private JPanel panel;
     private JButton res;
     private JButton clo;
     private JTextField player, score;
     private int rows, cols;
     private final int playerBlack = 0, playerWhite = 1;
-    private JButton[][] buttonG;
+    private JButton buttonG;
     private int round = 1;
+    private int whiteP, blackP;
+    private int[][] number;
     private Timer timeRound;
+    private Color color = new Color(230,191,0);
+
 
     public WindowBasic() throws IOException {
 
@@ -43,8 +47,8 @@ public class WindowBasic extends Frame{
     private void winBas(Container container) throws IOException {
         container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         container.setLayout(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-    //  constraints.weightx = 0.5;
+        constraints = new GridBagConstraints();
+        //  constraints.weightx = 0.5;
         constraints.gridy = 0;
         constraints.gridx = 0;
 
@@ -77,32 +81,53 @@ public class WindowBasic extends Frame{
         constraints.gridy = 0;
         container.add(clo, constraints);
 
-        buttonG = new JButton[8][8];
-        panel = new JPanel(new GridLayout(8,8));
-        panel.setPreferredSize(new Dimension(270,270));
+        number = new int[8][8];
+        panel = new JPanel(new GridLayout(8, 8));
+        panel.setPreferredSize(new Dimension(270, 270));
         for (rows = 0; rows < 8; rows++) {
             for (cols = 0; cols < 8; cols++) {
-                buttonG[rows][cols] = new JButton();
-                buttonG[rows][cols].addActionListener(new PositionAwareActionListener(rows, cols));
-                panel.add(buttonG[rows][cols]);
+                number[rows][cols] = 0;
+                buttonG = new JButton(Integer.toString(number[rows][cols]));
+                buttonG.addActionListener(new PositionAwareActionListener(rows, cols));
+                buttonG.setBackground(color);
+                buttonG.setEnabled(false);
+                panel.add(buttonG);
             }
         }
+
+
+     /**for (rows = 0; rows < 8; rows++){
+            for (cols = 0; rows < 8; cols++){
+
+            }
+        }*/
+
         constraints.weightx = 0.0;
         constraints.gridwidth = 4;
         constraints.gridx = 0;    // нулевая ячейка по горизонтали
         constraints.gridy = 1;    // первая ячейка по вертикали
         container.add(panel, constraints);
         File fileBlack = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Black.jpg");
-        Image imageBlack = ImageIO.read(fileBlack);
+  //      Image imageBlack = ImageIO.read(fileBlack);
         File fileWhite = new File(System.getProperty("user.dir") + "/src/com/company/jpg/White.jpg");
-        Image imageWhite = ImageIO.read(fileWhite);
-        Icon white = new ImageIcon(imageWhite);
-        Icon black = new ImageIcon(imageBlack);
-        buttonG[3][3].setIcon(white);
-        buttonG[3][4].setIcon(black);
-        buttonG[4][3].setIcon(black);
-        buttonG[4][4].setIcon(white);
+  //      Image imageWhite = ImageIO.read(fileWhite);
+  //      Icon white = new ImageIcon(imageWhite);
+ //       Icon black = new ImageIcon(imageBlack);
 
+        number[3][3] = whiteP;
+        number[3][4] = blackP;
+        number[4][3] = whiteP;
+        number[4][4] = blackP;
+/**
+        buttonG.setEnabled();
+        number[3][4].setEnabled(true);
+        number[4][3].setEnabled(true);
+        number[4][4].setEnabled(true);
+        buttonG.setIcon();
+        number[3][4].setIcon(black);
+        number[4][3].setIcon(black);
+        number[4][4].setIcon(white);
+*/
 
     }
 
