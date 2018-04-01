@@ -15,5 +15,8 @@ public class PositionAwareActionListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         //callYourFunction(x, y);
+        /**
+         * При нажатии на кнопку, массиву с координатами данной кнопки, присваилась картинка
+         */
     }
 }

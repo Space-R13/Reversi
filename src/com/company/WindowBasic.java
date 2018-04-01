@@ -113,7 +113,6 @@ public class WindowBasic extends Frame{
   //      Image imageWhite = ImageIO.read(fileWhite);
   //      Icon white = new ImageIcon(imageWhite);
  //       Icon black = new ImageIcon(imageBlack);
-
         number[3][3] = whiteP;
         number[3][4] = blackP;
         number[4][3] = whiteP;
