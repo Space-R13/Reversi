@@ -22,8 +22,8 @@ public class WindowBasic extends Frame{
     private final int playerBlack = 0, playerWhite = 1;
     private JButton[][] buttonG;
     private int round = 1;
-    private int whiteP, blackP;
-    private int [][] number;
+  //  private int whiteP, blackP;
+   // private int [][] number;
     private File fileBlack = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Black.jpg");
     private Image imageBlack = ImageIO.read(fileBlack);
     private File fileWhite = new File(System.getProperty("user.dir") + "/src/com/company/jpg/White.jpg");
@@ -92,14 +92,13 @@ public class WindowBasic extends Frame{
         container.add(clo, constraints);
 
         buttonG = new JButton[8][8];
-        number = new int[8][8];
+       // number = new int[8][8];
         panel = new JPanel(new GridLayout(8, 8));
         panel.setPreferredSize(new Dimension(270, 270));
         for (rows = 0; rows < 8; rows++) {
             for (cols = 0; cols < 8; cols++) {
-                buttonG[rows][cols] = new JButton(Integer.toString(number[rows][cols]));
-                number[rows][cols] = 0;
-                buttonG[rows][cols].addActionListener(new PositionAwareActionListener(rows, cols));
+                buttonG[rows][cols] = new JButton(/**Integer.toString(number[rows][cols])*/);
+          //      buttonG[rows][cols].addActionListener(new PositionAwareActionListener(rows, cols));
                 buttonG[rows][cols].setBackground(color);
                 buttonG[rows][cols].setEnabled(false);
                 panel.add(buttonG[rows][cols]);
@@ -141,7 +140,7 @@ public class WindowBasic extends Frame{
 
     }
 
-    void platerStep(int round){
+    void platerStep(){
         switch (round){
             case playerBlack:
                 round = playerWhite; // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
@@ -155,21 +154,64 @@ public class WindowBasic extends Frame{
     }
 
 
-    void step() {
+    public void step() {
 
-        for (rows = 0; rows < 8; rows++) {
-            for (cols = 0; cols < 8; cols++) {
-                buttonG[rows][cols] = new JButton();
-                if (buttonG[rows][cols] == null){
-                  buttonG[rows][cols].setEnabled(false);
-                }
-                if (buttonG[rows][cols] == buttonG[rows][cols].getIcon()){
 
-                }
+        if (rows > 0){ //сдвиг вверх по строкам
+            if (buttonG[rows - 1][cols] == white){
 
-                }
+            }
+            if (buttonG[rows - 1][cols] == black){
+
+            }
+            if (buttonG[rows - 1][cols] == null){
+
             }
         }
+
+        if (rows < 8){ //сдвиг вниз по строкам
+            if (buttonG[rows + 1][cols] == null){
+
+            }
+        }
+
+        if (cols > 0){ //сдвиг влево по столбцам
+            if (buttonG[rows][cols - 1] == null){
+
+            }
+        }
+
+        if (cols < 8){ //сдвиг вправо по столбцам
+            if (buttonG[rows][cols + 1] == null){
+
+            }
+        }
+
+        if (cols > 0 && rows > 0){
+            if (buttonG[rows - 1][cols - 1] == null){
+
+            }
+        }
+
+        if (cols < 8 && rows < 8){
+            if (buttonG[rows + 1][cols + 1] == null){
+
+            }
+        }
+
+        if (cols < 8 && rows > 0){
+            if (buttonG[rows - 1][cols + 1] == null){
+
+            }
+        }
+
+        if (cols > 0 && rows < 8){
+            if (buttonG[rows + 1][cols - 1] == null){
+
+            }
+        }
+
+    }
 
 
     void stepBlack(){
@@ -192,4 +234,11 @@ public class WindowBasic extends Frame{
     }
 
 
+    public JButton[][] getButtonG() {
+        return buttonG;
+    }
+
+    public void setButtonG(JButton[][] buttonG) {
+        this.buttonG = buttonG;
+    }
 }
