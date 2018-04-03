@@ -18,10 +18,10 @@ public class WindowBasic extends Frame{
     private JButton res;
     private JButton clo;
     private JTextField player, score;
-    private int rows, cols;
+    private int rows = 0, cols = 0;
     private final int playerBlack = 0, playerWhite = 1;
     private JButton[][] buttonG;
-    private boolean round = false;
+    private boolean round;
   //  private int whiteP, blackP;
    // private int [][] number;
     private File fileBlack = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Black.jpg");
@@ -44,14 +44,15 @@ public class WindowBasic extends Frame{
         frame.setVisible(true);
         frame.setSize(300,360);
         frame.setResizable(false);
-        frame.addMouseListener(new MouseAdapter() {
+     /**   frame.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 System.out.println(e);
             }
-        });
+        });*/
+        plateStep();
     }
 
-    private void winBas(Container container) throws IOException {
+    private void winBas(Container container){
 
 
 
@@ -97,16 +98,12 @@ public class WindowBasic extends Frame{
         panel.setPreferredSize(new Dimension(270, 270));
         for (rows = 0; rows < 8; rows++) {
             for (cols = 0; cols < 8; cols++) {
-                buttonG[rows][cols] = new JButton(/**Integer.toString(number[rows][cols])*/);
+                buttonG[rows][cols] = new JButton();
           //      buttonG[rows][cols].addActionListener(new PositionAwareActionListener(rows, cols));
                 buttonG[rows][cols].setBackground(color);
                 buttonG[rows][cols].setEnabled(false);
                 panel.add(buttonG[rows][cols]);
-             /**   if (number[rows][cols] == 0) {
-                    buttonG[rows][cols].setEnabled(false); // сокрытие нулевого елемента массива
-                } else
-                    buttonG[rows][cols].addActionListener(new PositionAwareActionListener(rows, cols));
-                */
+
             }
         }
         constraints.weightx = 0.0;
@@ -125,145 +122,114 @@ public class WindowBasic extends Frame{
         buttonG[4][3].setEnabled(true);
         buttonG[4][4].setIcon(white);
         buttonG[4][4].setEnabled(true);
-
-
-/**
-        buttonG.setEnabled();
-        number[3][4].setEnabled(true);
-        number[4][3].setEnabled(true);
-        number[4][4].setEnabled(true);
-        buttonG.setIcon();
-        number[3][4].setIcon(black);
-        number[4][3].setIcon(black);
-        number[4][4].setIcon(white);
-*/
-
     }
 
-    private void plateStep(boolean round){
+    private void plateStep(){
 
-        /**switch (round){
-            case true:
-                round = false; // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
-                player.setText("White");
-                break;
-            case false:
-                round = true;
-                player.setText("Black");
-                break;
-        }*/
-        if (round == true){
+        // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
+
+        if (round){
             player.setText("White");
             round = false;
             step();
         }
-        if (round == false){
+        if (round){
             player.setText("Black");
             round = true;
             step();
         }
     }
 
-
-    public void step() {
-
-        if (buttonG[rows][cols] != null) {
+     void step() {
+      //  if (buttonG[rows][cols] != null) {
             if (rows > 0) { //сдвиг вверх по строкам
-                if (buttonG[rows - 1][cols] == white && round == false) {
+                if (buttonG[rows - 1][cols] == white && round) {
                     buttonG[rows - 2][cols].setEnabled(true);
                     buttonG[rows - 2][cols].setText("+");
                 }
-
-                if (buttonG[rows - 1][cols] == black && round == true) {
+                if (buttonG[rows - 1][cols] == black && round) {
                     buttonG[rows - 2][cols].setEnabled(true);
                     buttonG[rows - 2][cols].setText("+");
                 }
-
-                /**     if (buttonG[rows - 1][cols] == black){
-
-                 }
-                 if (buttonG[rows - 1][cols] == null){
-
-                 }*/
             }
             if (rows < 8) { //сдвиг вниз по строкам
-                if (buttonG[rows + 1][cols] == white && round == false) {
+                if (buttonG[rows + 1][cols] == white && round) {
                     buttonG[rows + 2][cols].setEnabled(true);
                     buttonG[rows + 2][cols].setText("+");
                 }
 
-                if (buttonG[rows + 1][cols] == black && round == true) {
+                if (buttonG[rows + 1][cols] == black && round) {
                     buttonG[rows + 2][cols].setEnabled(true);
                     buttonG[rows + 2][cols].setText("+");
                 }
             }
             if (cols > 0) { //сдвиг влево по столбцам
-                if (buttonG[rows][cols - 1] == white && round == false) {
+                if (buttonG[rows][cols - 1] == white && round) {
                     buttonG[rows][cols - 2].setEnabled(true);
                     buttonG[rows][cols - 2].setText("+");
                 }
 
-                if (buttonG[rows][cols - 1] == black && round == true) {
+                if (buttonG[rows][cols - 1] == black && round) {
                     buttonG[rows][cols - 2].setEnabled(true);
                     buttonG[rows][cols - 2].setText("+");
                 }
             }
             if (cols < 8) { //сдвиг вправо по столбцам
-                if (buttonG[rows][cols + 1] == white && round == false) {
+                if (buttonG[rows][cols + 1] == white && round) {
                     buttonG[rows][cols + 2].setEnabled(true);
                     buttonG[rows][cols + 2].setText("+");
                 }
 
-                if (buttonG[rows][cols + 1] == black && round == true) {
+                if (buttonG[rows][cols + 1] == black && round) {
                     buttonG[rows][cols + 2].setEnabled(true);
                     buttonG[rows][cols + 2].setText("+");
                 }
             }
             if (cols > 0 && rows > 0) {
-                if (buttonG[rows - 1][cols - 1] == white && round == false) {
+                if (buttonG[rows - 1][cols - 1] == white && round) {
                     buttonG[rows - 2][cols - 2].setEnabled(true);
                     buttonG[rows - 2][cols - 2].setText("+");
                 }
 
-                if (buttonG[rows - 1][cols - 1] == black && round == true) {
+                if (buttonG[rows - 1][cols - 1] == black && round) {
                     buttonG[rows - 2][cols - 2].setEnabled(true);
                     buttonG[rows - 2][cols - 2].setText("+");
                 }
             }
             if (cols < 8 && rows < 8) {
-                if (buttonG[rows + 1][cols + 1] == white && round == false) {
+                if (buttonG[rows + 1][cols + 1] == white && round) {
                     buttonG[rows + 2][cols + 2].setEnabled(true);
                     buttonG[rows + 2][cols + 2].setText("+");
                 }
 
-                if (buttonG[rows + 1][cols + 1] == black && round == true) {
+                if (buttonG[rows + 1][cols + 1] == black && round) {
                     buttonG[rows + 2][cols + 2].setEnabled(true);
                     buttonG[rows + 2][cols + 2].setText("+");
                 }
             }
             if (cols < 8 && rows > 0) {
-                if (buttonG[rows - 1][cols + 1] == white && round == false) {
+                if (buttonG[rows - 1][cols + 1] == white && round) {
                     buttonG[rows - 2][cols + 2].setEnabled(true);
                     buttonG[rows - 2][cols + 2].setText("+");
                 }
 
-                if (buttonG[rows - 1][cols + 1] == black && round == true) {
+                if (buttonG[rows - 1][cols + 1] == black && round) {
                     buttonG[rows - 2][cols + 2].setEnabled(true);
                     buttonG[rows - 2][cols + 2].setText("+");
                 }
             }
             if (cols > 0 && rows < 8) {
-                if (buttonG[rows + 1][cols - 1] == white && round == false) {
+                if (buttonG[rows + 1][cols - 1] == white && round) {
                     buttonG[rows + 2][cols - 2].setEnabled(true);
                     buttonG[rows + 2][cols - 2].setText("+");
                 }
 
-                if (buttonG[rows + 1][cols - 1] == black && round == true) {
+                if (buttonG[rows + 1][cols - 1] == black && round) {
                     buttonG[rows + 2][cols - 2].setEnabled(true);
                     buttonG[rows + 2][cols - 2].setText("+");
                 }
             }
-        }
+
     }
 
 
@@ -289,11 +255,4 @@ public class WindowBasic extends Frame{
     }
 
 
-    public JButton[][] getButtonG() {
-        return buttonG;
-    }
-
-    public void setButtonG(JButton[][] buttonG) {
-        this.buttonG = buttonG;
-    }
 }
