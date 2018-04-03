@@ -128,12 +128,12 @@ public class WindowBasic extends Frame{
 
         // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
 
-        if (round){
+        if (round == true){
             player.setText("White");
             round = false;
             step();
         }
-        if (round){
+        if (round == false){
             player.setText("Black");
             round = true;
             step();
