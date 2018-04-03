@@ -21,7 +21,7 @@ public class WindowBasic extends Frame{
     private int rows, cols;
     private final int playerBlack = 0, playerWhite = 1;
     private JButton[][] buttonG;
-    private int round = 1;
+    private boolean round = false;
   //  private int whiteP, blackP;
    // private int [][] number;
     private File fileBlack = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Black.jpg");
@@ -140,78 +140,133 @@ public class WindowBasic extends Frame{
 
     }
 
-    void platerStep(){
-        switch (round){
-            case playerBlack:
-                round = playerWhite; // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
+    private void plateStep(boolean round){
+
+        /**switch (round){
+            case true:
+                round = false; // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
                 player.setText("White");
                 break;
-            case playerWhite:
-                round = playerBlack;
+            case false:
+                round = true;
                 player.setText("Black");
                 break;
+        }*/
+        if (round == true){
+            player.setText("White");
+            round = false;
+            step();
+        }
+        if (round == false){
+            player.setText("Black");
+            round = true;
+            step();
         }
     }
 
 
     public void step() {
 
+        if (buttonG[rows][cols] != null) {
+            if (rows > 0) { //сдвиг вверх по строкам
+                if (buttonG[rows - 1][cols] == white && round == false) {
+                    buttonG[rows - 2][cols].setEnabled(true);
+                    buttonG[rows - 2][cols].setText("+");
+                }
 
-        if (rows > 0){ //сдвиг вверх по строкам
-            if (buttonG[rows - 1][cols] == white){
+                if (buttonG[rows - 1][cols] == black && round == true) {
+                    buttonG[rows - 2][cols].setEnabled(true);
+                    buttonG[rows - 2][cols].setText("+");
+                }
 
+                /**     if (buttonG[rows - 1][cols] == black){
+
+                 }
+                 if (buttonG[rows - 1][cols] == null){
+
+                 }*/
             }
-            if (buttonG[rows - 1][cols] == black){
+            if (rows < 8) { //сдвиг вниз по строкам
+                if (buttonG[rows + 1][cols] == white && round == false) {
+                    buttonG[rows + 2][cols].setEnabled(true);
+                    buttonG[rows + 2][cols].setText("+");
+                }
 
+                if (buttonG[rows + 1][cols] == black && round == true) {
+                    buttonG[rows + 2][cols].setEnabled(true);
+                    buttonG[rows + 2][cols].setText("+");
+                }
             }
-            if (buttonG[rows - 1][cols] == null){
+            if (cols > 0) { //сдвиг влево по столбцам
+                if (buttonG[rows][cols - 1] == white && round == false) {
+                    buttonG[rows][cols - 2].setEnabled(true);
+                    buttonG[rows][cols - 2].setText("+");
+                }
 
+                if (buttonG[rows][cols - 1] == black && round == true) {
+                    buttonG[rows][cols - 2].setEnabled(true);
+                    buttonG[rows][cols - 2].setText("+");
+                }
+            }
+            if (cols < 8) { //сдвиг вправо по столбцам
+                if (buttonG[rows][cols + 1] == white && round == false) {
+                    buttonG[rows][cols + 2].setEnabled(true);
+                    buttonG[rows][cols + 2].setText("+");
+                }
+
+                if (buttonG[rows][cols + 1] == black && round == true) {
+                    buttonG[rows][cols + 2].setEnabled(true);
+                    buttonG[rows][cols + 2].setText("+");
+                }
+            }
+            if (cols > 0 && rows > 0) {
+                if (buttonG[rows - 1][cols - 1] == white && round == false) {
+                    buttonG[rows - 2][cols - 2].setEnabled(true);
+                    buttonG[rows - 2][cols - 2].setText("+");
+                }
+
+                if (buttonG[rows - 1][cols - 1] == black && round == true) {
+                    buttonG[rows - 2][cols - 2].setEnabled(true);
+                    buttonG[rows - 2][cols - 2].setText("+");
+                }
+            }
+            if (cols < 8 && rows < 8) {
+                if (buttonG[rows + 1][cols + 1] == white && round == false) {
+                    buttonG[rows + 2][cols + 2].setEnabled(true);
+                    buttonG[rows + 2][cols + 2].setText("+");
+                }
+
+                if (buttonG[rows + 1][cols + 1] == black && round == true) {
+                    buttonG[rows + 2][cols + 2].setEnabled(true);
+                    buttonG[rows + 2][cols + 2].setText("+");
+                }
+            }
+            if (cols < 8 && rows > 0) {
+                if (buttonG[rows - 1][cols + 1] == white && round == false) {
+                    buttonG[rows - 2][cols + 2].setEnabled(true);
+                    buttonG[rows - 2][cols + 2].setText("+");
+                }
+
+                if (buttonG[rows - 1][cols + 1] == black && round == true) {
+                    buttonG[rows - 2][cols + 2].setEnabled(true);
+                    buttonG[rows - 2][cols + 2].setText("+");
+                }
+            }
+            if (cols > 0 && rows < 8) {
+                if (buttonG[rows + 1][cols - 1] == white && round == false) {
+                    buttonG[rows + 2][cols - 2].setEnabled(true);
+                    buttonG[rows + 2][cols - 2].setText("+");
+                }
+
+                if (buttonG[rows + 1][cols - 1] == black && round == true) {
+                    buttonG[rows + 2][cols - 2].setEnabled(true);
+                    buttonG[rows + 2][cols - 2].setText("+");
+                }
             }
         }
-
-        if (rows < 8){ //сдвиг вниз по строкам
-            if (buttonG[rows + 1][cols] == null){
-
-            }
-        }
-
-        if (cols > 0){ //сдвиг влево по столбцам
-            if (buttonG[rows][cols - 1] == null){
-
-            }
-        }
-
-        if (cols < 8){ //сдвиг вправо по столбцам
-            if (buttonG[rows][cols + 1] == null){
-
-            }
-        }
-
-        if (cols > 0 && rows > 0){
-            if (buttonG[rows - 1][cols - 1] == null){
-
-            }
-        }
-
-        if (cols < 8 && rows < 8){
-            if (buttonG[rows + 1][cols + 1] == null){
-
-            }
-        }
-
-        if (cols < 8 && rows > 0){
-            if (buttonG[rows - 1][cols + 1] == null){
-
-            }
-        }
-
-        if (cols > 0 && rows < 8){
-            if (buttonG[rows + 1][cols - 1] == null){
-
-            }
-        }
-
     }
+
+
 
 
     void stepBlack(){
