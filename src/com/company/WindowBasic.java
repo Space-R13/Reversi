@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.text.AttributedCharacterIterator;
 
-public class WindowBasic extends Frame{
+public class WindowBasic extends JFrame{
     private GridBagConstraints constraints;
     private JPanel panel;
     private JButton res;
