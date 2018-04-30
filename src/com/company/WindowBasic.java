@@ -94,7 +94,7 @@ public class WindowBasic extends JFrame{
         for (rows = 0; rows < 8; rows++) {
             for (cols = 0; cols < 8; cols++) {
                 buttonG[rows][cols] = new Knopka(rows, cols);
-          //      buttonG[rows][cols].addActionListener(new PositionAwareActionListener(rows, cols));
+
                 buttonG[rows][cols].setBackground(color);
                 buttonG[rows][cols].setEnabled(false);
                 panel.add(buttonG[rows][cols]);

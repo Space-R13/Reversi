@@ -50,7 +50,7 @@ public class Main{
                 grid[x][y] = new JButton();
                 state[x][y] = 0;
                 window.add(grid[x][y]);
-                grid[x][y].addMouseListener((MouseListener) new CustomListener());
+                grid[x][y].addMouseListener((MouseListener) new ;
             }
         }
         grid[3][3].setIcon(white);
