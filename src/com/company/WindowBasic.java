@@ -171,6 +171,7 @@ public class WindowBasic extends JFrame implements ActionListener{
                     } else if (buttonG[i][coorY].getIcon() == icn1) {
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
+
                         break;
                     } else {
                         for (int x = 0; x < 7; x++){
@@ -442,8 +443,6 @@ public class WindowBasic extends JFrame implements ActionListener{
              for (rows = 0; rows < 7; rows++) {
                  for (cols = 0; cols < 7; cols++) {
                      step(rows, cols, round);
-
-
                  }
              }
          }
