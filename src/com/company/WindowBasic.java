@@ -1,18 +1,16 @@
 package com.company;
 
 
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.ImageObserver;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.text.AttributedCharacterIterator;
 
-public class WindowBasic extends JFrame{
+public class WindowBasic extends JFrame implements ActionListener{
     private GridBagConstraints constraints;
     private JPanel panel;
     private JButton res;
@@ -34,6 +32,7 @@ public class WindowBasic extends JFrame{
     private Icon green = new ImageIcon(imageGreen);
     private Icon black = new ImageIcon(imageBlack);
     private Timer timeRound;
+
     private Color color = new Color(230,191,0);
 
 
@@ -43,14 +42,18 @@ public class WindowBasic extends JFrame{
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         winBas(frame.getContentPane());
         frame.setSize(300,360);
-        frame.setResizable(false);
+        frame.setResizable(true);
       //  frame.pack();
         frame.setVisible(true);
    //     plateStep();
 
     }
 
+
+
     private void winBas(Container container){
+
+
         container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         container.setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();
@@ -94,7 +97,7 @@ public class WindowBasic extends JFrame{
         for (rows = 0; rows < 8; rows++) {
             for (cols = 0; cols < 8; cols++) {
                 buttonG[rows][cols] = new Knopka(rows, cols);
-
+                buttonG[rows][cols].addActionListener(this);
                 buttonG[rows][cols].setBackground(color);
                 buttonG[rows][cols].setEnabled(false);
                 panel.add(buttonG[rows][cols]);
@@ -127,7 +130,21 @@ public class WindowBasic extends JFrame{
     }
 
 
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Knopka knp = new Knopka(1,1);
+        knp = (Knopka) e.getSource();
+        player.setText(String.valueOf(knp.getXx()) + String.valueOf(knp.getYy()));
+
+
+    }
+
+
 /*
+    Integer.toString(rows) + Integer.toString(cols),
+
     private void plateStep(){
         // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
         if (round) {

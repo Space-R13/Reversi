@@ -6,40 +6,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class Knopka extends JButton implements MouseListener {
-    private int x;
-    private int y;
+public class Knopka extends JButton{
+    private int xx;
+    private int yy;
 
-    public Knopka(int x, int y){
-        this.x = x;
-        this.y = y;
+    public Knopka( int x, int y){
+        this.xx = x;
+        this.yy = y;
     }
 
-
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-
+    public int getXx() {
+        return xx;
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
+    public int getYy() {
+        return yy;
     }
 }
