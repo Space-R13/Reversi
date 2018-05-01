@@ -15,7 +15,7 @@ public class WindowBasic extends JFrame implements ActionListener{
     private JPanel panel;
     private JButton res;
     private JButton clo;
-    private JTextField player, score;
+    private JTextField players, score;
     private int rows = 0, cols = 0;
     private final int playerBlack = 0, playerWhite = 1;
     private JButton[][] buttonG;
@@ -76,13 +76,13 @@ public class WindowBasic extends JFrame implements ActionListener{
         constraints.gridy = 0;
         container.add(score, constraints);
 
-        player = new JTextField(5);
-        player.setEnabled(false);
-        player.setText("Players");
-        panel.add(player);
+        players = new JTextField(5);
+        players.setEnabled(false);
+        players.setText("Players");
+        panel.add(players);
         constraints.gridx = 2;
         constraints.gridy = 0;
-        container.add(player, constraints);
+        container.add(players, constraints);
 
         clo = new JButton("Close");
         panel.add(clo);
@@ -130,20 +130,280 @@ public class WindowBasic extends JFrame implements ActionListener{
     }
 
 
+    private void step(int coorX, int coorY, boolean player){
+        int i, j;
+        int[][] coorS = new int[7][2];
+        for (int x = 0; x < 7; x++){
+            coorS[x][0] = -1;
+            coorS[x][1] = -1;
+        }
+        Icon icn1;
+        Icon icn2;
+        if (player ) {
+            icn1 = black;
+            icn2 = white;
+        } else {
+            icn1 = white;
+            icn2 = black;
+        }
 
+        // Вверх
+        if(coorX >1){
+            if (buttonG[coorX - 1][coorY].getIcon() == icn2){
+                coorS[0][0] = coorX - 1;
+                coorS[0][1] = coorY;
+                i = coorX - 2;
+                j = 1;
+                while (i >= 0){
+                    if (buttonG[i][coorY].getIcon() == icn2) {
+                        coorS[j][0] = i;
+                        coorS[j][1] = coorY;
+                        i--;
+                        j++;
+                    } else if (buttonG[i][coorY].getIcon() == icn1) {
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        Knopka knp = new Knopka(1,1);
-        knp = (Knopka) e.getSource();
-        player.setText(String.valueOf(knp.getXx()) + String.valueOf(knp.getYy()));
+            }
+        } update(coorS,player);
+
+        // Вниз
+        if(coorX < 6){
+            if (buttonG[coorX + 1][coorY].getIcon() == icn2){
+                coorS[0][0] = coorX + 1;
+                coorS[0][1] = coorY;
+                i = coorX + 2;
+                j = 1;
+                while (i <= 7){
+                    if (buttonG[i][coorY].getIcon() == icn2) {
+                        coorS[j][0] = i;
+                        coorS[j][1] = coorY;
+                        i++;
+                        j++;
+                    } else if (buttonG[i][coorY].getIcon() == icn1) {
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+
+            }
+        } update(coorS,player);
+
+        // влево
+        if(coorY > 1){
+            if (buttonG[coorX][coorY - 1].getIcon() == icn2){
+                coorS[0][0] = coorX;
+                coorS[0][1] = coorY - 1;
+                i = coorY - 2;
+                j = 1;
+                while (i >= 0){
+                    if (buttonG[coorX][i].getIcon() == icn2) {
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = i;
+                        i--;
+                        j++;
+                    } else if (buttonG[coorX][i].getIcon() == icn1) {
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+
+            }
+        } update(coorS,player);
+
+        // право
+        if(coorY < 6){
+            if (buttonG[coorX][coorY + 1].getIcon() == icn2){
+                coorS[0][0] = coorX;
+                coorS[0][1] = coorY + 1;
+                i = coorY + 2;
+                j = 1;
+                while (i <= 7){
+                    if (buttonG[coorX][i].getIcon() == icn2) {
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = i;
+                        i++;
+                        j++;
+                    } else if (buttonG[coorX][i].getIcon() == icn1) {
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+
+            }
+        } update(coorS,player);
+
+        if(coorX >1){
+            if (buttonG[coorX - 1][coorY].getIcon() == icn2){
+                coorS[0][0] = coorX - 1;
+                coorS[0][1] = coorY;
+                i = coorX - 2;
+                j = 1;
+                while (i >= 0){
+                    if (buttonG[i][coorY].getIcon() == icn2) {
+                        coorS[j][0] = i;
+                        coorS[j][1] = coorY;
+                        i--;
+                        j++;
+                    } else if (buttonG[i][coorY].getIcon() == icn1) {
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+
+            }
+        } update(coorS,player);
+
+        if(coorX >1){
+            if (buttonG[coorX - 1][coorY].getIcon() == icn2){
+                coorS[0][0] = coorX - 1;
+                coorS[0][1] = coorY;
+                i = coorX - 2;
+                j = 1;
+                while (i >= 0){
+                    if (buttonG[i][coorY].getIcon() == icn2) {
+                        coorS[j][0] = i;
+                        coorS[j][1] = coorY;
+                        i--;
+                        j++;
+                    } else if (buttonG[i][coorY].getIcon() == icn1) {
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+
+            }
+        } update(coorS,player);
+
+        if(coorX >1){
+            if (buttonG[coorX - 1][coorY].getIcon() == icn2){
+                coorS[0][0] = coorX - 1;
+                coorS[0][1] = coorY;
+                i = coorX - 2;
+                j = 1;
+                while (i >= 0){
+                    if (buttonG[i][coorY].getIcon() == icn2) {
+                        coorS[j][0] = i;
+                        coorS[j][1] = coorY;
+                        i--;
+                        j++;
+                    } else if (buttonG[i][coorY].getIcon() == icn1) {
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+
+            }
+        } update(coorS,player);
+
+        if(coorX >1){
+            if (buttonG[coorX - 1][coorY].getIcon() == icn2){
+                coorS[0][0] = coorX - 1;
+                coorS[0][1] = coorY;
+                i = coorX - 2;
+                j = 1;
+                while (i >= 0){
+                    if (buttonG[i][coorY].getIcon() == icn2) {
+                        coorS[j][0] = i;
+                        coorS[j][1] = coorY;
+                        i--;
+                        j++;
+                    } else if (buttonG[i][coorY].getIcon() == icn1) {
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+
+            }
+        } update(coorS,player);
 
 
     }
 
+    private void update(int[][] coorS, boolean player){
+        Icon pl;
+        if (player){
+            pl = black;
+        } else pl = white;
+
+        for (int x = 0; x < 7; x++){
+            if (coorS[x][0] != -1) {
+                buttonG[coorS[x][0]][coorS[x][1]].setIcon(pl);
+            } else break;
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        int coorX = ((Knopka) e.getSource()).getXx();
+        int coorY = ((Knopka) e.getSource()).getYy();
+        players.setText(String.valueOf(coorX) + String.valueOf(coorY));
+        step(coorX, coorY, round);
+    }
+
+
+
 
 /*
-    Integer.toString(rows) + Integer.toString(cols),
 
     private void plateStep(){
         // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
