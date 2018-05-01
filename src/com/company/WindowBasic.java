@@ -416,146 +416,36 @@ public class WindowBasic extends JFrame implements ActionListener{
         int coorX = ((Knopka) e.getSource()).getXx();
         int coorY = ((Knopka) e.getSource()).getYy();
         players.setText(String.valueOf(coorX) + String.valueOf(coorY));
-        step(coorX, coorY, !round);
+        step(coorX, coorY, round);
+        plateStep();
     }
 
-
-
-
-/*
 
     private void plateStep(){
         // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
         if (round) {
-            player.setText("Black");
-            step(round);
+            players.setText("Black");
+            stepTest(round);
             round = false;
 
         } else {
-            player.setText("White");
-            step(round);
+            players.setText("White");
+            stepTest(round);
             round = true;
         }
     }
 
-     private void step(boolean round) {
-        if (round) {
-         for (rows = 2; rows < 6; rows++) {
-             for (cols = 2; cols < 6; cols++) {
-                 if (buttonG[rows][cols].getIcon() == black) {
+     private void stepTest(boolean round) {
 
-                     //сдвиг вверх по строкам
-                     if (buttonG[rows - 1][cols].getIcon() == white) {
-
-                             buttonG[rows - 2][cols].setEnabled(true);
-                             buttonG[rows - 2][cols].setIcon(green);
-
-                     }
-
-                     if (buttonG[rows + 1][cols].getIcon() == white) {
-                         buttonG[rows + 2][cols].setEnabled(true);
-                         buttonG[rows + 2][cols].setIcon(green);
-                     }
-
-                     if (buttonG[rows][cols - 1].getIcon() == white) {
-                         buttonG[rows][cols - 2].setEnabled(true);
-                         buttonG[rows][cols - 2].setIcon(green);
-                     }
-
-                     if (buttonG[rows][cols + 1].getIcon() == white) {
-                         buttonG[rows][cols + 2].setEnabled(true);
-                         buttonG[rows][cols + 2].setIcon(green);
-                     }
-
-                     if (buttonG[rows - 1][cols - 1].getIcon() == white) {
-                         buttonG[rows - 2][cols - 2].setEnabled(true);
-                         buttonG[rows - 2][cols - 2].setIcon(green);
-                     }
-
-                     if (buttonG[rows + 1][cols + 1].getIcon() == white) {
-                         buttonG[rows + 2][cols + 2].setEnabled(true);
-                         buttonG[rows + 2][cols + 2].setIcon(green);
-                     }
-
-                     if (buttonG[rows - 1][cols + 1].getIcon() == white) {
-                         buttonG[rows - 2][cols + 2].setEnabled(true);
-                         buttonG[rows - 2][cols + 2].setIcon(green);
-                     }
-
-                     if (buttonG[rows + 1][cols - 1].getIcon() == white) {
-                         buttonG[rows + 2][cols - 2].setEnabled(true);
-                         buttonG[rows + 2][cols - 2].setIcon(green);
-                     }
+         int i;
+         if (round) {
+             for (rows = 0; rows < 7; rows++) {
+                 for (cols = 0; cols < 7; cols++) {
+                     step(rows, cols, round);
 
 
                  }
-           /*       //сдвиг вниз по строкам
-
-
-                     else if (buttonG[rows + 1][cols] == black) {
-                         buttonG[rows + 2][cols].setEnabled(true);
-                         buttonG[rows + 2][cols].setText("+");
-                     }
-
-                     else
-
-                 //сдвиг влево по столбцам
-
-
-                     else if (buttonG[rows][cols - 1] == black) {
-                         buttonG[rows][cols - 2].setEnabled(true);
-                         buttonG[rows][cols - 2].setText("+");
-                     }
-
-                     else ;
-
-                 //сдвиг вправо по столбцам
-
-
-                     else if (buttonG[rows][cols + 1] == black) {
-                         buttonG[rows][cols + 2].setEnabled(true);
-                         buttonG[rows][cols + 2].setText("+");
-                     }
-
-                     else ;
-
-
-
-
-                     else if (buttonG[rows - 1][cols - 1] == black) {
-                         buttonG[rows - 2][cols - 2].setEnabled(true);
-                         buttonG[rows - 2][cols - 2].setText("+");
-                     }
-
-                     else ;
-
-
-
-
-                     else if (buttonG[rows + 1][cols + 1] == black) {
-                         buttonG[rows + 2][cols + 2].setEnabled(true);
-                         buttonG[rows + 2][cols + 2].setText("+");
-                     }
-                     else ;
-
-
-
-                     else if (buttonG[rows - 1][cols + 1] == black) {
-                         buttonG[rows - 2][cols + 2].setEnabled(true);
-                         buttonG[rows - 2][cols + 2].setText("+");
-                     }
-                     else ;
-
-
-
-
-                     else if (buttonG[rows + 1][cols - 1] == black) {
-                         buttonG[rows + 2][cols - 2].setEnabled(true);
-                         buttonG[rows + 2][cols - 2].setText("+");
-                     }
-                     else ;
-                }
              }
          }
-    }*/
+     }
 }
