@@ -125,13 +125,21 @@ public class WindowBasic extends JFrame implements ActionListener{
         buttonG[5][4].setEnabled(true);
         buttonG[4][5].setIcon(green);
         buttonG[4][5].setEnabled(true);
+        buttonG[2][2].setIcon(green);
+        buttonG[2][2].setEnabled(true);
+        buttonG[2][5].setIcon(green);
+        buttonG[2][5].setEnabled(true);
+        buttonG[5][5].setIcon(green);
+        buttonG[5][5].setEnabled(true);
+        buttonG[5][2].setIcon(green);
+        buttonG[5][2].setEnabled(true);
 
 
     }
 
 
     private void step(int coorX, int coorY, boolean player){
-        int i, j;
+        int i, j, k;
         int[][] coorS = new int[7][2];
         for (int x = 0; x < 7; x++){
             coorS[x][0] = -1;
@@ -148,7 +156,7 @@ public class WindowBasic extends JFrame implements ActionListener{
         }
 
         // Вверх
-        if(coorX >1){
+        if(coorX > 1){
             if (buttonG[coorX - 1][coorY].getIcon() == icn2){
                 coorS[0][0] = coorX - 1;
                 coorS[0][1] = coorY;
@@ -263,19 +271,22 @@ public class WindowBasic extends JFrame implements ActionListener{
             }
         } update(coorS,player);
 
-        if(coorX >1){
-            if (buttonG[coorX - 1][coorY].getIcon() == icn2){
+        // вверх влево
+        if(coorX > 1 && coorY > 1){
+            if (buttonG[coorX - 1][coorY - 1].getIcon() == icn2){
                 coorS[0][0] = coorX - 1;
-                coorS[0][1] = coorY;
+                coorS[0][1] = coorY - 1;
                 i = coorX - 2;
+                k = coorY - 2;
                 j = 1;
-                while (i >= 0){
-                    if (buttonG[i][coorY].getIcon() == icn2) {
+                while (i >= 0 && k >= 0){
+                    if (buttonG[i][k].getIcon() == icn2) {
                         coorS[j][0] = i;
-                        coorS[j][1] = coorY;
+                        coorS[j][1] = k;
                         i--;
+                        k--;
                         j++;
-                    } else if (buttonG[i][coorY].getIcon() == icn1) {
+                    } else if (buttonG[i][k].getIcon() == icn1) {
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
                         break;
@@ -291,19 +302,22 @@ public class WindowBasic extends JFrame implements ActionListener{
             }
         } update(coorS,player);
 
-        if(coorX >1){
-            if (buttonG[coorX - 1][coorY].getIcon() == icn2){
-                coorS[0][0] = coorX - 1;
-                coorS[0][1] = coorY;
-                i = coorX - 2;
+        // вниз вправо
+        if(coorX < 6 && coorY < 6){
+            if (buttonG[coorX + 1][coorY + 1].getIcon() == icn2){
+                coorS[0][0] = coorX + 1;
+                coorS[0][1] = coorY + 1;
+                i = coorX + 2;
+                k = coorY + 2;
                 j = 1;
-                while (i >= 0){
-                    if (buttonG[i][coorY].getIcon() == icn2) {
+                while (i <= 7 && k <= 7){
+                    if (buttonG[i][k].getIcon() == icn2) {
                         coorS[j][0] = i;
-                        coorS[j][1] = coorY;
-                        i--;
+                        coorS[j][1] = k;
+                        i++;
+                        k++;
                         j++;
-                    } else if (buttonG[i][coorY].getIcon() == icn1) {
+                    } else if (buttonG[i][k].getIcon() == icn1) {
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
                         break;
@@ -319,19 +333,22 @@ public class WindowBasic extends JFrame implements ActionListener{
             }
         } update(coorS,player);
 
-        if(coorX >1){
-            if (buttonG[coorX - 1][coorY].getIcon() == icn2){
+        // вверх вправо
+        if(coorX > 1 && coorY < 6){
+            if (buttonG[coorX - 1][coorY + 1].getIcon() == icn2){
                 coorS[0][0] = coorX - 1;
-                coorS[0][1] = coorY;
+                coorS[0][1] = coorY + 1;
                 i = coorX - 2;
+                k = coorY + 2;
                 j = 1;
-                while (i >= 0){
-                    if (buttonG[i][coorY].getIcon() == icn2) {
+                while (i >= 0 && k <= 7){
+                    if (buttonG[i][k].getIcon() == icn2) {
                         coorS[j][0] = i;
-                        coorS[j][1] = coorY;
+                        coorS[j][1] = k;
                         i--;
+                        k++;
                         j++;
-                    } else if (buttonG[i][coorY].getIcon() == icn1) {
+                    } else if (buttonG[i][k].getIcon() == icn1) {
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
                         break;
@@ -347,19 +364,21 @@ public class WindowBasic extends JFrame implements ActionListener{
             }
         } update(coorS,player);
 
-        if(coorX >1){
-            if (buttonG[coorX - 1][coorY].getIcon() == icn2){
-                coorS[0][0] = coorX - 1;
-                coorS[0][1] = coorY;
-                i = coorX - 2;
+        if(coorX < 6 && coorY > 1){
+            if (buttonG[coorX + 1][coorY - 1].getIcon() == icn2){
+                coorS[0][0] = coorX + 1;
+                coorS[0][1] = coorY - 1;
+                i = coorX + 2;
+                k = coorY - 2;
                 j = 1;
-                while (i >= 0){
-                    if (buttonG[i][coorY].getIcon() == icn2) {
+                while (i <= 7 && k >= 0){
+                    if (buttonG[i][k].getIcon() == icn2) {
                         coorS[j][0] = i;
-                        coorS[j][1] = coorY;
-                        i--;
+                        coorS[j][1] = k;
+                        i++;
+                        k--;
                         j++;
-                    } else if (buttonG[i][coorY].getIcon() == icn1) {
+                    } else if (buttonG[i][k].getIcon() == icn1) {
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
                         break;
@@ -397,7 +416,7 @@ public class WindowBasic extends JFrame implements ActionListener{
         int coorX = ((Knopka) e.getSource()).getXx();
         int coorY = ((Knopka) e.getSource()).getYy();
         players.setText(String.valueOf(coorX) + String.valueOf(coorY));
-        step(coorX, coorY, round);
+        step(coorX, coorY, !round);
     }
 
 
