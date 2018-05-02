@@ -16,10 +16,11 @@ public class WindowBasic extends JFrame implements ActionListener{
     private JButton res;
     private JButton clo;
     private JTextField players, score;
+
     private int rows = 0, cols = 0;
     private final int playerBlack = 0, playerWhite = 1;
     private JButton[][] buttonG;
-    private boolean round = true;
+    private boolean round = true, proverka = true;
   //  private int whiteP, blackP;
    // private int [][] number;
     private File fileBlack = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Black.jpg");
@@ -30,6 +31,9 @@ public class WindowBasic extends JFrame implements ActionListener{
     private File fileGreen = new File(System.getProperty("user.dir") + "/src/com/company/jpg/1.jpg");
     private Image imageGreen = ImageIO.read(fileGreen);
     private Icon green = new ImageIcon(imageGreen);
+    private File fileYellow = new File(System.getProperty("user.dir") + "/src/com/company/jpg/pusto.jpg");
+    private Image imageYellow = ImageIO.read(fileYellow);
+    private Icon yellow = new ImageIcon(imageYellow);
     private Icon black = new ImageIcon(imageBlack);
     private Timer timeRound;
 
@@ -78,7 +82,7 @@ public class WindowBasic extends JFrame implements ActionListener{
 
         players = new JTextField(5);
         players.setEnabled(false);
-        players.setText("Players");
+        players.setText("Black");
         panel.add(players);
         constraints.gridx = 2;
         constraints.gridy = 0;
@@ -98,8 +102,8 @@ public class WindowBasic extends JFrame implements ActionListener{
             for (cols = 0; cols < 8; cols++) {
                 buttonG[rows][cols] = new Knopka(rows, cols);
                 buttonG[rows][cols].addActionListener(this);
-                buttonG[rows][cols].setBackground(color);
-                buttonG[rows][cols].setEnabled(false);
+                buttonG[rows][cols].setIcon(yellow);
+       //         buttonG[rows][cols].setEnabled(false);
                 panel.add(buttonG[rows][cols]);
 
             }
@@ -125,7 +129,7 @@ public class WindowBasic extends JFrame implements ActionListener{
         buttonG[5][4].setEnabled(true);
         buttonG[4][5].setIcon(green);
         buttonG[4][5].setEnabled(true);
-        buttonG[2][2].setIcon(green);
+/*        buttonG[2][2].setIcon(green);
         buttonG[2][2].setEnabled(true);
         buttonG[2][5].setIcon(green);
         buttonG[2][5].setEnabled(true);
@@ -133,12 +137,13 @@ public class WindowBasic extends JFrame implements ActionListener{
         buttonG[5][5].setEnabled(true);
         buttonG[5][2].setIcon(green);
         buttonG[5][2].setEnabled(true);
-
+*/
 
     }
 
 
-    private void step(int coorX, int coorY, boolean player){
+    private void step(int coorX, int coorY, boolean player, boolean proverka){
+        boolean vozmozhenHod = false;
         int i, j, k;
         int[][] coorS = new int[7][2];
         for (int x = 0; x < 7; x++){
@@ -169,9 +174,13 @@ public class WindowBasic extends JFrame implements ActionListener{
                         i--;
                         j++;
                     } else if (buttonG[i][coorY].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
+                            buttonG[coorX][coorY].setIcon(green);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
-
+                        vozmozhenHod = true;
                         break;
                     } else {
                         for (int x = 0; x < 7; x++){
@@ -183,7 +192,10 @@ public class WindowBasic extends JFrame implements ActionListener{
                 }
 
             }
-        } update(coorS,player);
+        }if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+        }
+
 
         // Вниз
         if(coorX < 6){
@@ -199,8 +211,13 @@ public class WindowBasic extends JFrame implements ActionListener{
                         i++;
                         j++;
                     } else if (buttonG[i][coorY].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
+                            buttonG[coorX][coorY].setIcon(green);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
+                        vozmozhenHod = true;
                         break;
                     } else {
                         for (int x = 0; x < 7; x++){
@@ -212,7 +229,10 @@ public class WindowBasic extends JFrame implements ActionListener{
                 }
 
             }
-        } update(coorS,player);
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+
+        }
 
         // влево
         if(coorY > 1){
@@ -228,8 +248,13 @@ public class WindowBasic extends JFrame implements ActionListener{
                         i--;
                         j++;
                     } else if (buttonG[coorX][i].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
+                            buttonG[coorX][coorY].setIcon(green);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
+                        vozmozhenHod = true;
                         break;
                     } else {
                         for (int x = 0; x < 7; x++){
@@ -241,7 +266,9 @@ public class WindowBasic extends JFrame implements ActionListener{
                 }
 
             }
-        } update(coorS,player);
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+        }
 
         // право
         if(coorY < 6){
@@ -257,8 +284,13 @@ public class WindowBasic extends JFrame implements ActionListener{
                         i++;
                         j++;
                     } else if (buttonG[coorX][i].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
+                            buttonG[coorX][coorY].setIcon(green);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
+                        vozmozhenHod = true;
                         break;
                     } else {
                         for (int x = 0; x < 7; x++){
@@ -270,7 +302,9 @@ public class WindowBasic extends JFrame implements ActionListener{
                 }
 
             }
-        } update(coorS,player);
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+        }
 
         // вверх влево
         if(coorX > 1 && coorY > 1){
@@ -288,8 +322,13 @@ public class WindowBasic extends JFrame implements ActionListener{
                         k--;
                         j++;
                     } else if (buttonG[i][k].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
+                            buttonG[coorX][coorY].setIcon(green);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
+                        vozmozhenHod = true;
                         break;
                     } else {
                         for (int x = 0; x < 7; x++){
@@ -301,7 +340,9 @@ public class WindowBasic extends JFrame implements ActionListener{
                 }
 
             }
-        } update(coorS,player);
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+        }
 
         // вниз вправо
         if(coorX < 6 && coorY < 6){
@@ -319,8 +360,13 @@ public class WindowBasic extends JFrame implements ActionListener{
                         k++;
                         j++;
                     } else if (buttonG[i][k].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
+                            buttonG[coorX][coorY].setIcon(green);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
+                        vozmozhenHod = true;
                         break;
                     } else {
                         for (int x = 0; x < 7; x++){
@@ -332,7 +378,9 @@ public class WindowBasic extends JFrame implements ActionListener{
                 }
 
             }
-        } update(coorS,player);
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+        }
 
         // вверх вправо
         if(coorX > 1 && coorY < 6){
@@ -350,8 +398,13 @@ public class WindowBasic extends JFrame implements ActionListener{
                         k++;
                         j++;
                     } else if (buttonG[i][k].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
+                            buttonG[coorX][coorY].setIcon(green);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
+                        vozmozhenHod = true;
                         break;
                     } else {
                         for (int x = 0; x < 7; x++){
@@ -363,7 +416,10 @@ public class WindowBasic extends JFrame implements ActionListener{
                 }
 
             }
-        } update(coorS,player);
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+
+        }
 
         if(coorX < 6 && coorY > 1){
             if (buttonG[coorX + 1][coorY - 1].getIcon() == icn2){
@@ -380,8 +436,13 @@ public class WindowBasic extends JFrame implements ActionListener{
                         k--;
                         j++;
                     } else if (buttonG[i][k].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
+                            buttonG[coorX][coorY].setIcon(green);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
                         coorS[j][0] = coorX;
                         coorS[j][1] = coorY;
+                        vozmozhenHod = true;
                         break;
                     } else {
                         for (int x = 0; x < 7; x++){
@@ -393,9 +454,11 @@ public class WindowBasic extends JFrame implements ActionListener{
                 }
 
             }
-        } update(coorS,player);
-
-
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+            vozmozhenHod = false;
+            plateStep();
+        }
     }
 
     private void update(int[][] coorS, boolean player){
@@ -416,35 +479,40 @@ public class WindowBasic extends JFrame implements ActionListener{
 
         int coorX = ((Knopka) e.getSource()).getXx();
         int coorY = ((Knopka) e.getSource()).getYy();
-        players.setText(String.valueOf(coorX) + String.valueOf(coorY));
-        step(coorX, coorY, round);
-        plateStep();
+     //   players.setText(String.valueOf(coorX) + String.valueOf(coorY));
+        step(coorX, coorY, round, false);
     }
 
 
     private void plateStep(){
+
         // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
         if (round) {
-            players.setText("Black");
-            stepTest(round);
+            players.setText("White");
             round = false;
+            stepTest(round);
+
 
         } else {
-            players.setText("White");
-            stepTest(round);
+            players.setText("Black");
             round = true;
+            stepTest(round);
         }
     }
 
      private void stepTest(boolean round) {
-
-         int i;
-         if (round) {
-             for (rows = 0; rows < 7; rows++) {
-                 for (cols = 0; cols < 7; cols++) {
-                     step(rows, cols, round);
-                 }
+         for (rows = 0; rows < 7; rows++) {
+             for (cols = 0; cols < 7; cols++) {
+                if (buttonG[rows][cols].getIcon() != black && buttonG[rows][cols].getIcon() != white ){
+                    buttonG[rows][cols].setIcon(yellow);
+                }
              }
          }
+             for (rows = 0; rows < 7; rows++) {
+                 for (cols = 0; cols < 7; cols++) {
+                     step(rows, cols, round, true);
+                 }
+             }
+
      }
 }
