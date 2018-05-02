@@ -124,7 +124,7 @@ public class WindowBasic extends JFrame implements ActionListener{
         buttonG[5][4].setEnabled(true);
         buttonG[4][5].setIcon(hod);
         buttonG[4][5].setEnabled(true);
-        System.out.println("1");
+
         clo.addActionListener(e -> System.exit(1));
         res.addActionListener(e -> winBasRes());
     }
