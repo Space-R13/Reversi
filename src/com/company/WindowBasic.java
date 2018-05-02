@@ -18,9 +18,9 @@ public class WindowBasic extends JFrame implements ActionListener{
     private JTextField players, score;
 
     private int rows = 0, cols = 0;
-    private final int playerBlack = 0, playerWhite = 1;
+//    private final int playerBlack = 0, playerWhite = 1;
     private JButton[][] buttonG;
-    private boolean round = true, proverka = true;
+    private boolean round = true; // proverka = true;
   //  private int whiteP, blackP;
    // private int [][] number;
     private File fileBlack = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Black.jpg");
@@ -35,9 +35,9 @@ public class WindowBasic extends JFrame implements ActionListener{
     private Image imageYellow = ImageIO.read(fileYellow);
     private Icon yellow = new ImageIcon(imageYellow);
     private Icon black = new ImageIcon(imageBlack);
-    private Timer timeRound;
 
-    private Color color = new Color(230,191,0);
+
+//    private Color color = new Color(230,191,0);
 
 
     WindowBasic() throws IOException {
@@ -57,8 +57,6 @@ public class WindowBasic extends JFrame implements ActionListener{
 
 
     private void winBas(Container container){
-
-
         container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         container.setLayout(new GridBagLayout());
         constraints = new GridBagConstraints();
@@ -128,9 +126,9 @@ public class WindowBasic extends JFrame implements ActionListener{
         buttonG[5][4].setEnabled(true);
         buttonG[4][5].setIcon(green);
         buttonG[4][5].setEnabled(true);
-
+        System.out.println("1");
         clo.addActionListener(e -> System.exit(1));
-        res.addActionListener(e ->winBasRes());
+        res.addActionListener(e -> winBasRes());
 
     }
 
@@ -576,7 +574,6 @@ public class WindowBasic extends JFrame implements ActionListener{
         buttonG[5][4].setEnabled(true);
         buttonG[4][5].setIcon(green);
         buttonG[4][5].setEnabled(true);
-
-
+        round = true;
     }
 }
