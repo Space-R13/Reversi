@@ -34,7 +34,7 @@ public class WindowBasic extends JFrame implements ActionListener{
     private Color textF = new Color(241, 223, 183);
 
     WindowBasic() throws IOException {
-        JFrame frame = new JFrame("Reverse");
+        JFrame frame = new JFrame("Reversi");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         winBas(frame.getContentPane());
         frame.setSize(350,410);
