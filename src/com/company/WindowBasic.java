@@ -467,7 +467,7 @@ public class WindowBasic extends JFrame implements ActionListener{
             pl = black;
         } else pl = white;
 
-        for (int x = 0; x < 7; x++){
+        for (int x = 0; x <= 7; x++){
             if (coorS[x][0] != -1) {
                 buttonG[coorS[x][0]][coorS[x][1]].setIcon(pl);
             } else break;
@@ -480,7 +480,9 @@ public class WindowBasic extends JFrame implements ActionListener{
         int coorX = ((Knopka) e.getSource()).getXx();
         int coorY = ((Knopka) e.getSource()).getYy();
      //   players.setText(String.valueOf(coorX) + String.valueOf(coorY));
-        step(coorX, coorY, round, false);
+        if (buttonG[coorX][coorY].getIcon() == green) {
+            step(coorX, coorY, round, false);
+        }
     }
 
 
@@ -501,18 +503,35 @@ public class WindowBasic extends JFrame implements ActionListener{
     }
 
      private void stepTest(boolean round) {
-         for (rows = 0; rows < 7; rows++) {
-             for (cols = 0; cols < 7; cols++) {
+        boolean okG = false;
+        boolean okY = false;
+         for (rows = 0; rows <= 7; rows++) {
+             for (cols = 0; cols <= 7; cols++) {
                 if (buttonG[rows][cols].getIcon() != black && buttonG[rows][cols].getIcon() != white ){
                     buttonG[rows][cols].setIcon(yellow);
                 }
              }
          }
-             for (rows = 0; rows < 7; rows++) {
-                 for (cols = 0; cols < 7; cols++) {
-                     step(rows, cols, round, true);
+             for (rows = 0; rows <= 7; rows++) {
+                 for (cols = 0; cols <= 7; cols++) {
+                     if (buttonG[rows][cols].getIcon() != black && buttonG[rows][cols].getIcon() != white ) {
+                         step(rows, cols, round, true);
+                     }
                  }
              }
+         for (rows = 0; rows <= 7; rows++) {
+             for (cols = 0; cols <= 7; cols++) {
+                if (buttonG[rows][cols].getIcon() == green){
+                    okG = true;
 
+                }
+                if (buttonG[rows][cols].getIcon() == yellow){
+                    okY = true;
+                }
+             }if (okG){break;}
+         }
+            if (!okG && okY){
+             plateStep();
+            }
      }
 }
