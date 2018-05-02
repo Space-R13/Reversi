@@ -46,7 +46,7 @@ public class WindowBasic extends JFrame implements ActionListener{
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         winBas(frame.getContentPane());
         frame.setSize(300,360);
-        frame.setResizable(true);
+        frame.setResizable(false);
       //  frame.pack();
         frame.setVisible(true);
    //     plateStep();
@@ -72,9 +72,9 @@ public class WindowBasic extends JFrame implements ActionListener{
         constraints.gridy = 0;
         container.add(panel, constraints);
 
-        score = new JTextField(5);
+        score = new JTextField(7);
         score.setEnabled(false);
-        score.setText("Time");
+        score.setText("Score");
         panel.add(score);
         constraints.gridx = 1;
         constraints.gridy = 0;
@@ -103,7 +103,6 @@ public class WindowBasic extends JFrame implements ActionListener{
                 buttonG[rows][cols] = new Knopka(rows, cols);
                 buttonG[rows][cols].addActionListener(this);
                 buttonG[rows][cols].setIcon(yellow);
-       //         buttonG[rows][cols].setEnabled(false);
                 panel.add(buttonG[rows][cols]);
 
             }
@@ -138,6 +137,8 @@ public class WindowBasic extends JFrame implements ActionListener{
         buttonG[5][2].setIcon(green);
         buttonG[5][2].setEnabled(true);
 */
+        clo.addActionListener(e -> System.exit(1));
+        res.addActionListener(e -> winBas(this));
 
     }
 
@@ -467,7 +468,7 @@ public class WindowBasic extends JFrame implements ActionListener{
             pl = black;
         } else pl = white;
 
-        for (int x = 0; x <= 7; x++){
+        for (int x = 0; x <= 6; x++){
             if (coorS[x][0] != -1) {
                 buttonG[coorS[x][0]][coorS[x][1]].setIcon(pl);
             } else break;
@@ -505,13 +506,25 @@ public class WindowBasic extends JFrame implements ActionListener{
      private void stepTest(boolean round) {
         boolean okG = false;
         boolean okY = false;
+        int colWhite = 0, colBlack = 0;
          for (rows = 0; rows <= 7; rows++) {
              for (cols = 0; cols <= 7; cols++) {
                 if (buttonG[rows][cols].getIcon() != black && buttonG[rows][cols].getIcon() != white ){
                     buttonG[rows][cols].setIcon(yellow);
                 }
+                if (buttonG[rows][cols].getIcon() == black){
+                    colBlack++;
+                }
+                if (buttonG[rows][cols].getIcon() == white){
+                    colWhite++;
+                }
+
              }
          }
+         score.setText("B:" + Integer.toString(colBlack) + "-" + "W:" + Integer.toString(colWhite));
+
+
+
              for (rows = 0; rows <= 7; rows++) {
                  for (cols = 0; cols <= 7; cols++) {
                      if (buttonG[rows][cols].getIcon() != black && buttonG[rows][cols].getIcon() != white ) {
@@ -519,6 +532,7 @@ public class WindowBasic extends JFrame implements ActionListener{
                      }
                  }
              }
+
          for (rows = 0; rows <= 7; rows++) {
              for (cols = 0; cols <= 7; cols++) {
                 if (buttonG[rows][cols].getIcon() == green){
@@ -530,8 +544,19 @@ public class WindowBasic extends JFrame implements ActionListener{
                 }
              }if (okG){break;}
          }
-            if (!okG && okY){
+         if (!okG && okY){
              plateStep();
-            }
+             }
+         if (!okG && !okY) {
+             if (colBlack > colWhite) {
+                 players.setText("Win B");
+             } else if (colBlack < colWhite) {
+                 players.setText("Win W");
+             } else {
+                 players.setText("Draw");
+             }
+
+
+         }
      }
 }
