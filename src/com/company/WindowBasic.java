@@ -47,6 +47,7 @@ public class WindowBasic extends JFrame implements ActionListener{
         winBas(frame.getContentPane());
         frame.setSize(300,360);
         frame.setResizable(false);
+        frame.setBackground(Color.blue);
       //  frame.pack();
         frame.setVisible(true);
    //     plateStep();
