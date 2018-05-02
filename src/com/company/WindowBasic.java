@@ -1,7 +1,5 @@
 package com.company;
 
-
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -16,72 +14,66 @@ public class WindowBasic extends JFrame implements ActionListener{
     private JButton res;
     private JButton clo;
     private JTextField players, score;
-
     private int rows = 0, cols = 0;
-//    private final int playerBlack = 0, playerWhite = 1;
     private JButton[][] buttonG;
-    private boolean round = true; // proverka = true;
-  //  private int whiteP, blackP;
-   // private int [][] number;
+    private boolean round = true;
     private File fileBlack = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Black.jpg");
     private Image imageBlack = ImageIO.read(fileBlack);
+    private Icon black = new ImageIcon(imageBlack);
     private File fileWhite = new File(System.getProperty("user.dir") + "/src/com/company/jpg/White.jpg");
     private Image imageWhite = ImageIO.read(fileWhite);
     private Icon white = new ImageIcon(imageWhite);
-    private File fileGreen = new File(System.getProperty("user.dir") + "/src/com/company/jpg/1.jpg");
-    private Image imageGreen = ImageIO.read(fileGreen);
-    private Icon green = new ImageIcon(imageGreen);
-    private File fileYellow = new File(System.getProperty("user.dir") + "/src/com/company/jpg/pusto.jpg");
-    private Image imageYellow = ImageIO.read(fileYellow);
-    private Icon yellow = new ImageIcon(imageYellow);
-    private Icon black = new ImageIcon(imageBlack);
-
-
-//    private Color color = new Color(230,191,0);
-
+    private File fileHod = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Hod.jpg");
+    private Image imageHod = ImageIO.read(fileHod);
+    private Icon hod = new ImageIcon(imageHod);
+    private File fileIshod = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Ishod.jpg");
+    private Image imageIshod = ImageIO.read(fileIshod);
+    private Icon ishod = new ImageIcon(imageIshod);
+    private Color color = new Color(151, 83, 0);
+    private Color button = new Color(203, 148, 30);
+    private Color textF = new Color(241, 223, 183);
 
     WindowBasic() throws IOException {
-
         JFrame frame = new JFrame("Reverse");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         winBas(frame.getContentPane());
-        frame.setSize(300,360);
+        frame.setSize(350,410);
         frame.setResizable(false);
         frame.setBackground(Color.blue);
       //  frame.pack();
         frame.setVisible(true);
-   //     plateStep();
-
-
     }
-
-
 
     private void winBas(Container container){
         container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         container.setLayout(new GridBagLayout());
+        container.setBackground(color);
         constraints = new GridBagConstraints();
-        //  constraints.weightx = 0.5;
         constraints.gridy = 0;
         constraints.gridx = 0;
 
         panel = new JPanel();
+        panel.setBackground(color);
+
         res = new JButton("Reset");
+        res.setBackground(button);
         panel.add(res);
         constraints.gridx = 0;
         constraints.gridy = 0;
         container.add(panel, constraints);
 
-        score = new JTextField(7);
+        score = new JTextField(8);
         score.setEnabled(false);
+        score.setBackground(textF);
         score.setText("Score");
         panel.add(score);
         constraints.gridx = 1;
         constraints.gridy = 0;
         container.add(score, constraints);
 
-        players = new JTextField(5);
+        players = new JTextField(9);
         players.setEnabled(false);
+        players.setBackground(textF);
         players.setText("Black");
         panel.add(players);
         constraints.gridx = 2;
@@ -89,6 +81,7 @@ public class WindowBasic extends JFrame implements ActionListener{
         container.add(players, constraints);
 
         clo = new JButton("Close");
+        clo.setBackground(button);
         panel.add(clo);
         constraints.gridx = 3;
         constraints.gridy = 0;
@@ -97,12 +90,12 @@ public class WindowBasic extends JFrame implements ActionListener{
         buttonG = new JButton[8][8];
        // number = new int[8][8];
         panel = new JPanel(new GridLayout(8, 8));
-        panel.setPreferredSize(new Dimension(270, 270));
+        panel.setPreferredSize(new Dimension(320, 320));
         for (rows = 0; rows < 8; rows++) {
             for (cols = 0; cols < 8; cols++) {
                 buttonG[rows][cols] = new Knopka(rows, cols);
                 buttonG[rows][cols].addActionListener(this);
-                buttonG[rows][cols].setIcon(yellow);
+                buttonG[rows][cols].setIcon(ishod);
                 panel.add(buttonG[rows][cols]);
             }
         }
@@ -119,20 +112,18 @@ public class WindowBasic extends JFrame implements ActionListener{
         buttonG[4][3].setEnabled(true);
         buttonG[4][4].setIcon(white);
         buttonG[4][4].setEnabled(true);
-        buttonG[3][2].setIcon(green);
+        buttonG[3][2].setIcon(hod);
         buttonG[3][2].setEnabled(true);
-        buttonG[2][3].setIcon(green);
+        buttonG[2][3].setIcon(hod);
         buttonG[2][3].setEnabled(true);
-        buttonG[5][4].setIcon(green);
+        buttonG[5][4].setIcon(hod);
         buttonG[5][4].setEnabled(true);
-        buttonG[4][5].setIcon(green);
+        buttonG[4][5].setIcon(hod);
         buttonG[4][5].setEnabled(true);
         System.out.println("1");
         clo.addActionListener(e -> System.exit(1));
         res.addActionListener(e -> winBasRes());
-
     }
-
 
     private void step(int coorX, int coorY, boolean player, boolean proverka){
         boolean vozmozhenHod = false;
@@ -166,8 +157,8 @@ public class WindowBasic extends JFrame implements ActionListener{
                         i--;
                         j++;
                     } else if (buttonG[i][coorY].getIcon() == icn1) {
-                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
-                            buttonG[coorX][coorY].setIcon(green);
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
                             buttonG[coorX][coorY].setEnabled(true);
                         }
                         coorS[j][0] = coorX;
@@ -182,7 +173,6 @@ public class WindowBasic extends JFrame implements ActionListener{
                         break;
                     }
                 }
-
             }
         }if (!proverka && vozmozhenHod) {
             update(coorS, player);
@@ -203,8 +193,8 @@ public class WindowBasic extends JFrame implements ActionListener{
                         i++;
                         j++;
                     } else if (buttonG[i][coorY].getIcon() == icn1) {
-                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
-                            buttonG[coorX][coorY].setIcon(green);
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
                             buttonG[coorX][coorY].setEnabled(true);
                         }
                         coorS[j][0] = coorX;
@@ -219,11 +209,9 @@ public class WindowBasic extends JFrame implements ActionListener{
                         break;
                     }
                 }
-
             }
         } if (!proverka && vozmozhenHod) {
             update(coorS, player);
-
         }
 
         // влево
@@ -240,8 +228,8 @@ public class WindowBasic extends JFrame implements ActionListener{
                         i--;
                         j++;
                     } else if (buttonG[coorX][i].getIcon() == icn1) {
-                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
-                            buttonG[coorX][coorY].setIcon(green);
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
                             buttonG[coorX][coorY].setEnabled(true);
                         }
                         coorS[j][0] = coorX;
@@ -256,7 +244,6 @@ public class WindowBasic extends JFrame implements ActionListener{
                         break;
                     }
                 }
-
             }
         } if (!proverka && vozmozhenHod) {
             update(coorS, player);
@@ -276,8 +263,8 @@ public class WindowBasic extends JFrame implements ActionListener{
                         i++;
                         j++;
                     } else if (buttonG[coorX][i].getIcon() == icn1) {
-                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
-                            buttonG[coorX][coorY].setIcon(green);
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
                             buttonG[coorX][coorY].setEnabled(true);
                         }
                         coorS[j][0] = coorX;
@@ -292,7 +279,6 @@ public class WindowBasic extends JFrame implements ActionListener{
                         break;
                     }
                 }
-
             }
         } if (!proverka && vozmozhenHod) {
             update(coorS, player);
@@ -314,8 +300,8 @@ public class WindowBasic extends JFrame implements ActionListener{
                         k--;
                         j++;
                     } else if (buttonG[i][k].getIcon() == icn1) {
-                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
-                            buttonG[coorX][coorY].setIcon(green);
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
                             buttonG[coorX][coorY].setEnabled(true);
                         }
                         coorS[j][0] = coorX;
@@ -330,7 +316,6 @@ public class WindowBasic extends JFrame implements ActionListener{
                         break;
                     }
                 }
-
             }
         } if (!proverka && vozmozhenHod) {
             update(coorS, player);
@@ -352,8 +337,8 @@ public class WindowBasic extends JFrame implements ActionListener{
                         k++;
                         j++;
                     } else if (buttonG[i][k].getIcon() == icn1) {
-                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
-                            buttonG[coorX][coorY].setIcon(green);
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
                             buttonG[coorX][coorY].setEnabled(true);
                         }
                         coorS[j][0] = coorX;
@@ -368,7 +353,6 @@ public class WindowBasic extends JFrame implements ActionListener{
                         break;
                     }
                 }
-
             }
         } if (!proverka && vozmozhenHod) {
             update(coorS, player);
@@ -390,8 +374,8 @@ public class WindowBasic extends JFrame implements ActionListener{
                         k++;
                         j++;
                     } else if (buttonG[i][k].getIcon() == icn1) {
-                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
-                            buttonG[coorX][coorY].setIcon(green);
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
                             buttonG[coorX][coorY].setEnabled(true);
                         }
                         coorS[j][0] = coorX;
@@ -406,11 +390,9 @@ public class WindowBasic extends JFrame implements ActionListener{
                         break;
                     }
                 }
-
             }
         } if (!proverka && vozmozhenHod) {
             update(coorS, player);
-
         }
 
         if(coorX < 6 && coorY > 1){
@@ -428,8 +410,8 @@ public class WindowBasic extends JFrame implements ActionListener{
                         k--;
                         j++;
                     } else if (buttonG[i][k].getIcon() == icn1) {
-                        if (proverka && buttonG[coorX][coorY].getIcon() == yellow){
-                            buttonG[coorX][coorY].setIcon(green);
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
                             buttonG[coorX][coorY].setEnabled(true);
                         }
                         coorS[j][0] = coorX;
@@ -444,7 +426,6 @@ public class WindowBasic extends JFrame implements ActionListener{
                         break;
                     }
                 }
-
             }
         } if (!proverka && vozmozhenHod) {
             update(coorS, player);
@@ -458,7 +439,6 @@ public class WindowBasic extends JFrame implements ActionListener{
         if (player){
             pl = black;
         } else pl = white;
-
         for (int x = 0; x <= 6; x++){
             if (coorS[x][0] != -1) {
                 buttonG[coorS[x][0]][coorS[x][1]].setIcon(pl);
@@ -468,25 +448,19 @@ public class WindowBasic extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         int coorX = ((Knopka) e.getSource()).getXx();
         int coorY = ((Knopka) e.getSource()).getYy();
-     //   players.setText(String.valueOf(coorX) + String.valueOf(coorY));
-        if (buttonG[coorX][coorY].getIcon() == green) {
+        if (buttonG[coorX][coorY].getIcon() == hod) {
             step(coorX, coorY, round, false);
         }
     }
 
-
     private void plateStep(){
-
         // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
         if (round) {
             players.setText("White");
             round = false;
             stepTest(round);
-
-
         } else {
             players.setText("Black");
             round = true;
@@ -501,7 +475,7 @@ public class WindowBasic extends JFrame implements ActionListener{
          for (rows = 0; rows <= 7; rows++) {
              for (cols = 0; cols <= 7; cols++) {
                 if (buttonG[rows][cols].getIcon() != black && buttonG[rows][cols].getIcon() != white ){
-                    buttonG[rows][cols].setIcon(yellow);
+                    buttonG[rows][cols].setIcon(ishod);
                 }
                 if (buttonG[rows][cols].getIcon() == black){
                     colBlack++;
@@ -509,13 +483,9 @@ public class WindowBasic extends JFrame implements ActionListener{
                 if (buttonG[rows][cols].getIcon() == white){
                     colWhite++;
                 }
-
              }
          }
-         score.setText("B:" + Integer.toString(colBlack) + "-" + "W:" + Integer.toString(colWhite));
-
-
-
+         score.setText("B:" + Integer.toString(colBlack) + " - " + "W:" + Integer.toString(colWhite));
              for (rows = 0; rows <= 7; rows++) {
                  for (cols = 0; cols <= 7; cols++) {
                      if (buttonG[rows][cols].getIcon() != black && buttonG[rows][cols].getIcon() != white ) {
@@ -526,28 +496,27 @@ public class WindowBasic extends JFrame implements ActionListener{
 
          for (rows = 0; rows <= 7; rows++) {
              for (cols = 0; cols <= 7; cols++) {
-                if (buttonG[rows][cols].getIcon() == green){
+                if (buttonG[rows][cols].getIcon() == hod){
                     okG = true;
-
                 }
-                if (buttonG[rows][cols].getIcon() == yellow){
+                if (buttonG[rows][cols].getIcon() == ishod){
                     okY = true;
                 }
              }if (okG){break;}
          }
+
          if (!okG && okY){
              plateStep();
              }
+
          if (!okG && !okY) {
              if (colBlack > colWhite) {
-                 players.setText("Win B");
+                 players.setText("Win Black");
              } else if (colBlack < colWhite) {
-                 players.setText("Win W");
+                 players.setText("Win White");
              } else {
                  players.setText("Draw");
              }
-
-
          }
      }
 
@@ -556,7 +525,7 @@ public class WindowBasic extends JFrame implements ActionListener{
         players.setText("Black");
         for (rows = 0; rows < 8; rows++) {
             for (cols = 0; cols < 8; cols++) {
-                buttonG[rows][cols].setIcon(yellow);
+                buttonG[rows][cols].setIcon(ishod);
             }
         }
         buttonG[3][3].setIcon(white);
@@ -567,13 +536,13 @@ public class WindowBasic extends JFrame implements ActionListener{
         buttonG[4][3].setEnabled(true);
         buttonG[4][4].setIcon(white);
         buttonG[4][4].setEnabled(true);
-        buttonG[3][2].setIcon(green);
+        buttonG[3][2].setIcon(hod);
         buttonG[3][2].setEnabled(true);
-        buttonG[2][3].setIcon(green);
+        buttonG[2][3].setIcon(hod);
         buttonG[2][3].setEnabled(true);
-        buttonG[5][4].setIcon(green);
+        buttonG[5][4].setIcon(hod);
         buttonG[5][4].setEnabled(true);
-        buttonG[4][5].setIcon(green);
+        buttonG[4][5].setIcon(hod);
         buttonG[4][5].setEnabled(true);
         round = true;
     }
