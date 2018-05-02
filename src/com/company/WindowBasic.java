@@ -51,6 +51,7 @@ public class WindowBasic extends JFrame implements ActionListener{
         frame.setVisible(true);
    //     plateStep();
 
+
     }
 
 
@@ -104,7 +105,6 @@ public class WindowBasic extends JFrame implements ActionListener{
                 buttonG[rows][cols].addActionListener(this);
                 buttonG[rows][cols].setIcon(yellow);
                 panel.add(buttonG[rows][cols]);
-
             }
         }
         constraints.weightx = 0.0;
@@ -128,17 +128,9 @@ public class WindowBasic extends JFrame implements ActionListener{
         buttonG[5][4].setEnabled(true);
         buttonG[4][5].setIcon(green);
         buttonG[4][5].setEnabled(true);
-/*        buttonG[2][2].setIcon(green);
-        buttonG[2][2].setEnabled(true);
-        buttonG[2][5].setIcon(green);
-        buttonG[2][5].setEnabled(true);
-        buttonG[5][5].setIcon(green);
-        buttonG[5][5].setEnabled(true);
-        buttonG[5][2].setIcon(green);
-        buttonG[5][2].setEnabled(true);
-*/
+
         clo.addActionListener(e -> System.exit(1));
-        res.addActionListener(e -> winBas(this));
+        res.addActionListener(e ->winBasRes());
 
     }
 
@@ -559,4 +551,32 @@ public class WindowBasic extends JFrame implements ActionListener{
 
          }
      }
+
+    private void winBasRes(){
+        score.setText("Score");
+        players.setText("Black");
+        for (rows = 0; rows < 8; rows++) {
+            for (cols = 0; cols < 8; cols++) {
+                buttonG[rows][cols].setIcon(yellow);
+            }
+        }
+        buttonG[3][3].setIcon(white);
+        buttonG[3][3].setEnabled(true);
+        buttonG[3][4].setIcon(black);
+        buttonG[3][4].setEnabled(true);
+        buttonG[4][3].setIcon(black);
+        buttonG[4][3].setEnabled(true);
+        buttonG[4][4].setIcon(white);
+        buttonG[4][4].setEnabled(true);
+        buttonG[3][2].setIcon(green);
+        buttonG[3][2].setEnabled(true);
+        buttonG[2][3].setIcon(green);
+        buttonG[2][3].setEnabled(true);
+        buttonG[5][4].setIcon(green);
+        buttonG[5][4].setEnabled(true);
+        buttonG[4][5].setIcon(green);
+        buttonG[4][5].setEnabled(true);
+
+
+    }
 }
