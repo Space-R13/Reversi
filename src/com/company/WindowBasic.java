@@ -1,5 +1,7 @@
 package com.company;
 
+import javafx.scene.text.Font;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -63,8 +65,9 @@ public class WindowBasic extends JFrame implements ActionListener{
         container.add(panel, constraints);
 
         score = new JTextField(8);
-        score.setEnabled(false);
+        score.setEditable(false);
         score.setBackground(textF);
+        score.setHorizontalAlignment(JTextField.CENTER);
         score.setText("Score");
         panel.add(score);
         constraints.gridx = 1;
@@ -72,8 +75,9 @@ public class WindowBasic extends JFrame implements ActionListener{
         container.add(score, constraints);
 
         players = new JTextField(9);
-        players.setEnabled(false);
+        players.setEditable(false);
         players.setBackground(textF);
+        players.setHorizontalAlignment(JTextField.CENTER);
         players.setText("Black");
         panel.add(players);
         constraints.gridx = 2;
