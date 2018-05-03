@@ -1,92 +1,91 @@
 package com.company;
 
+import javafx.scene.text.Font;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.ImageObserver;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.text.AttributedCharacterIterator;
 
-public class WindowBasic extends Frame{
+public class WindowBasic extends JFrame implements ActionListener{
     private GridBagConstraints constraints;
     private JPanel panel;
     private JButton res;
     private JButton clo;
-    private JTextField player, score;
+    private JTextField players, score;
     private int rows = 0, cols = 0;
-    private final int playerBlack = 0, playerWhite = 1;
     private JButton[][] buttonG;
-    private boolean round;
-  //  private int whiteP, blackP;
-   // private int [][] number;
+    private boolean round = true;
     private File fileBlack = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Black.jpg");
     private Image imageBlack = ImageIO.read(fileBlack);
+    private Icon black = new ImageIcon(imageBlack);
     private File fileWhite = new File(System.getProperty("user.dir") + "/src/com/company/jpg/White.jpg");
     private Image imageWhite = ImageIO.read(fileWhite);
     private Icon white = new ImageIcon(imageWhite);
-    private Icon black = new ImageIcon(imageBlack);
-    private Timer timeRound;
-    private Color color = new Color(230,191,0);
+    private File fileHod = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Hod.jpg");
+    private Image imageHod = ImageIO.read(fileHod);
+    private Icon hod = new ImageIcon(imageHod);
+    private File fileIshod = new File(System.getProperty("user.dir") + "/src/com/company/jpg/Ishod.jpg");
+    private Image imageIshod = ImageIO.read(fileIshod);
+    private Icon ishod = new ImageIcon(imageIshod);
+    private Color color = new Color(151, 83, 0);
+    private Color button = new Color(203, 148, 30);
+    private Color textF = new Color(241, 223, 183);
 
-
-    public WindowBasic() throws IOException {
-
-        JFrame frame = new JFrame("Reverse");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+    WindowBasic() throws IOException {
+        JFrame frame = new JFrame("Reversi");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         winBas(frame.getContentPane());
-        frame.pack();
-        frame.setVisible(true);
-        frame.setSize(300,360);
+        frame.setSize(355,415);
         frame.setResizable(false);
-     /**   frame.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent e) {
-                System.out.println(e);
-            }
-        });*/
-        plateStep();
+        frame.setBackground(Color.blue);
+      //  frame.pack();
+        frame.setVisible(true);
     }
 
     private void winBas(Container container){
-
-
-
         container.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
         container.setLayout(new GridBagLayout());
+        container.setBackground(color);
         constraints = new GridBagConstraints();
-        //  constraints.weightx = 0.5;
         constraints.gridy = 0;
         constraints.gridx = 0;
 
         panel = new JPanel();
+        panel.setBackground(color);
+
         res = new JButton("Reset");
+        res.setBackground(button);
         panel.add(res);
         constraints.gridx = 0;
         constraints.gridy = 0;
         container.add(panel, constraints);
 
-        score = new JTextField(5);
-        score.setEnabled(false);
-        score.setText("Time");
+        score = new JTextField(7);
+        score.setEditable(false);
+        score.setBackground(textF);
+        score.setHorizontalAlignment(JTextField.CENTER);
+        score.setText("Score");
         panel.add(score);
         constraints.gridx = 1;
         constraints.gridy = 0;
         container.add(score, constraints);
 
-        player = new JTextField(5);
-        player.setEnabled(false);
-        player.setText("Players");
-        panel.add(player);
+        players = new JTextField(7);
+        players.setEditable(false);
+        players.setBackground(textF);
+        players.setHorizontalAlignment(JTextField.CENTER);
+        players.setText("Black");
+        panel.add(players);
         constraints.gridx = 2;
         constraints.gridy = 0;
-        container.add(player, constraints);
+        container.add(players, constraints);
 
         clo = new JButton("Close");
+        clo.setBackground(button);
         panel.add(clo);
         constraints.gridx = 3;
         constraints.gridy = 0;
@@ -95,15 +94,13 @@ public class WindowBasic extends Frame{
         buttonG = new JButton[8][8];
        // number = new int[8][8];
         panel = new JPanel(new GridLayout(8, 8));
-        panel.setPreferredSize(new Dimension(270, 270));
+        panel.setPreferredSize(new Dimension(320, 320));
         for (rows = 0; rows < 8; rows++) {
             for (cols = 0; cols < 8; cols++) {
-                buttonG[rows][cols] = new JButton();
-          //      buttonG[rows][cols].addActionListener(new PositionAwareActionListener(rows, cols));
-                buttonG[rows][cols].setBackground(color);
-                buttonG[rows][cols].setEnabled(false);
+                buttonG[rows][cols] = new Knopka(rows, cols);
+                buttonG[rows][cols].addActionListener(this);
+                buttonG[rows][cols].setIcon(ishod);
                 panel.add(buttonG[rows][cols]);
-
             }
         }
         constraints.weightx = 0.0;
@@ -111,148 +108,446 @@ public class WindowBasic extends Frame{
         constraints.gridx = 0;    // нулевая ячейка по горизонтали
         constraints.gridy = 1;    // первая ячейка по вертикали
         container.add(panel, constraints);
-
         buttonG[3][3].setIcon(white);
         buttonG[3][3].setEnabled(true);
-       // buttonG[3][3] = new JButton(Integer.toString(number[3][3]));
-       // buttonG[3][3].setIcon(black);
         buttonG[3][4].setIcon(black);
         buttonG[3][4].setEnabled(true);
         buttonG[4][3].setIcon(black);
         buttonG[4][3].setEnabled(true);
         buttonG[4][4].setIcon(white);
         buttonG[4][4].setEnabled(true);
+        buttonG[3][2].setIcon(hod);
+        buttonG[3][2].setEnabled(true);
+        buttonG[2][3].setIcon(hod);
+        buttonG[2][3].setEnabled(true);
+        buttonG[5][4].setIcon(hod);
+        buttonG[5][4].setEnabled(true);
+        buttonG[4][5].setIcon(hod);
+        buttonG[4][5].setEnabled(true);
+
+        clo.addActionListener(e -> System.exit(1));
+        res.addActionListener(e -> winBasRes());
+    }
+
+    private void step(int coorX, int coorY, boolean player, boolean proverka){
+        boolean vozmozhenHod = false;
+        int i, j, k;
+        int[][] coorS = new int[7][2];
+        for (int x = 0; x < 7; x++){
+            coorS[x][0] = -1;
+            coorS[x][1] = -1;
+        }
+        Icon icn1;
+        Icon icn2;
+        if (player ) {
+            icn1 = black;
+            icn2 = white;
+        } else {
+            icn1 = white;
+            icn2 = black;
+        }
+
+        // Вверх
+        if(coorX > 1){
+            if (buttonG[coorX - 1][coorY].getIcon() == icn2){
+                coorS[0][0] = coorX - 1;
+                coorS[0][1] = coorY;
+                i = coorX - 2;
+                j = 1;
+                while (i >= 0){
+                    if (buttonG[i][coorY].getIcon() == icn2) {
+                        coorS[j][0] = i;
+                        coorS[j][1] = coorY;
+                        i--;
+                        j++;
+                    } else if (buttonG[i][coorY].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        vozmozhenHod = true;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+            }
+        }if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+        }
+
+
+        // Вниз
+        if(coorX < 6){
+            if (buttonG[coorX + 1][coorY].getIcon() == icn2){
+                coorS[0][0] = coorX + 1;
+                coorS[0][1] = coorY;
+                i = coorX + 2;
+                j = 1;
+                while (i <= 7){
+                    if (buttonG[i][coorY].getIcon() == icn2) {
+                        coorS[j][0] = i;
+                        coorS[j][1] = coorY;
+                        i++;
+                        j++;
+                    } else if (buttonG[i][coorY].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        vozmozhenHod = true;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+            }
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+        }
+
+        // влево
+        if(coorY > 1){
+            if (buttonG[coorX][coorY - 1].getIcon() == icn2){
+                coorS[0][0] = coorX;
+                coorS[0][1] = coorY - 1;
+                i = coorY - 2;
+                j = 1;
+                while (i >= 0){
+                    if (buttonG[coorX][i].getIcon() == icn2) {
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = i;
+                        i--;
+                        j++;
+                    } else if (buttonG[coorX][i].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        vozmozhenHod = true;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+            }
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+        }
+
+        // право
+        if(coorY < 6){
+            if (buttonG[coorX][coorY + 1].getIcon() == icn2){
+                coorS[0][0] = coorX;
+                coorS[0][1] = coorY + 1;
+                i = coorY + 2;
+                j = 1;
+                while (i <= 7){
+                    if (buttonG[coorX][i].getIcon() == icn2) {
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = i;
+                        i++;
+                        j++;
+                    } else if (buttonG[coorX][i].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        vozmozhenHod = true;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+            }
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+        }
+
+        // вверх влево
+        if(coorX > 1 && coorY > 1){
+            if (buttonG[coorX - 1][coorY - 1].getIcon() == icn2){
+                coorS[0][0] = coorX - 1;
+                coorS[0][1] = coorY - 1;
+                i = coorX - 2;
+                k = coorY - 2;
+                j = 1;
+                while (i >= 0 && k >= 0){
+                    if (buttonG[i][k].getIcon() == icn2) {
+                        coorS[j][0] = i;
+                        coorS[j][1] = k;
+                        i--;
+                        k--;
+                        j++;
+                    } else if (buttonG[i][k].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        vozmozhenHod = true;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+            }
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+        }
+
+        // вниз вправо
+        if(coorX < 6 && coorY < 6){
+            if (buttonG[coorX + 1][coorY + 1].getIcon() == icn2){
+                coorS[0][0] = coorX + 1;
+                coorS[0][1] = coorY + 1;
+                i = coorX + 2;
+                k = coorY + 2;
+                j = 1;
+                while (i <= 7 && k <= 7){
+                    if (buttonG[i][k].getIcon() == icn2) {
+                        coorS[j][0] = i;
+                        coorS[j][1] = k;
+                        i++;
+                        k++;
+                        j++;
+                    } else if (buttonG[i][k].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        vozmozhenHod = true;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+            }
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+        }
+
+        // вверх вправо
+        if(coorX > 1 && coorY < 6){
+            if (buttonG[coorX - 1][coorY + 1].getIcon() == icn2){
+                coorS[0][0] = coorX - 1;
+                coorS[0][1] = coorY + 1;
+                i = coorX - 2;
+                k = coorY + 2;
+                j = 1;
+                while (i >= 0 && k <= 7){
+                    if (buttonG[i][k].getIcon() == icn2) {
+                        coorS[j][0] = i;
+                        coorS[j][1] = k;
+                        i--;
+                        k++;
+                        j++;
+                    } else if (buttonG[i][k].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        vozmozhenHod = true;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+            }
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+        }
+
+        if(coorX < 6 && coorY > 1){
+            if (buttonG[coorX + 1][coorY - 1].getIcon() == icn2){
+                coorS[0][0] = coorX + 1;
+                coorS[0][1] = coorY - 1;
+                i = coorX + 2;
+                k = coorY - 2;
+                j = 1;
+                while (i <= 7 && k >= 0){
+                    if (buttonG[i][k].getIcon() == icn2) {
+                        coorS[j][0] = i;
+                        coorS[j][1] = k;
+                        i++;
+                        k--;
+                        j++;
+                    } else if (buttonG[i][k].getIcon() == icn1) {
+                        if (proverka && buttonG[coorX][coorY].getIcon() == ishod){
+                            buttonG[coorX][coorY].setIcon(hod);
+                            buttonG[coorX][coorY].setEnabled(true);
+                        }
+                        coorS[j][0] = coorX;
+                        coorS[j][1] = coorY;
+                        vozmozhenHod = true;
+                        break;
+                    } else {
+                        for (int x = 0; x < 7; x++){
+                            coorS[x][0] = -1;
+                            coorS[x][1] = -1;
+                        }
+                        break;
+                    }
+                }
+            }
+        } if (!proverka && vozmozhenHod) {
+            update(coorS, player);
+            vozmozhenHod = false;
+            plateStep();
+        }
+    }
+
+    private void update(int[][] coorS, boolean player){
+        Icon pl;
+        if (player){
+            pl = black;
+        } else pl = white;
+        for (int x = 0; x <= 6; x++){
+            if (coorS[x][0] != -1) {
+                buttonG[coorS[x][0]][coorS[x][1]].setIcon(pl);
+            } else break;
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int coorX = ((Knopka) e.getSource()).getXx();
+        int coorY = ((Knopka) e.getSource()).getYy();
+        if (buttonG[coorX][coorY].getIcon() == hod) {
+            step(coorX, coorY, round, false);
+        }
     }
 
     private void plateStep(){
-
         // Нужно вписать метод определения возможных ходов, метода два, для чёрных и для белых
-
-        if (round == true){
-            player.setText("White");
+        if (round) {
+            players.setText("White");
             round = false;
-            step();
-        }
-        if (round == false){
-            player.setText("Black");
+            stepTest(round);
+        } else {
+            players.setText("Black");
             round = true;
-            step();
+            stepTest(round);
         }
     }
 
-     void step() {
-      //  if (buttonG[rows][cols] != null) {
-            if (rows > 0) { //сдвиг вверх по строкам
-                if (buttonG[rows - 1][cols] == white && round) {
-                    buttonG[rows - 2][cols].setEnabled(true);
-                    buttonG[rows - 2][cols].setText("+");
+     private void stepTest(boolean round) {
+        boolean okG = false;
+        boolean okY = false;
+        int colWhite = 0, colBlack = 0;
+         for (rows = 0; rows <= 7; rows++) {
+             for (cols = 0; cols <= 7; cols++) {
+                if (buttonG[rows][cols].getIcon() != black && buttonG[rows][cols].getIcon() != white ){
+                    buttonG[rows][cols].setIcon(ishod);
                 }
-                if (buttonG[rows - 1][cols] == black && round) {
-                    buttonG[rows - 2][cols].setEnabled(true);
-                    buttonG[rows - 2][cols].setText("+");
+                if (buttonG[rows][cols].getIcon() == black){
+                    colBlack++;
                 }
-            }
-            if (rows < 8) { //сдвиг вниз по строкам
-                if (buttonG[rows + 1][cols] == white && round) {
-                    buttonG[rows + 2][cols].setEnabled(true);
-                    buttonG[rows + 2][cols].setText("+");
+                if (buttonG[rows][cols].getIcon() == white){
+                    colWhite++;
                 }
+             }
+         }
+         score.setText("B:" + Integer.toString(colBlack) + " - " + "W:" + Integer.toString(colWhite));
+             for (rows = 0; rows <= 7; rows++) {
+                 for (cols = 0; cols <= 7; cols++) {
+                     if (buttonG[rows][cols].getIcon() != black && buttonG[rows][cols].getIcon() != white ) {
+                         step(rows, cols, round, true);
+                     }
+                 }
+             }
 
-                if (buttonG[rows + 1][cols] == black && round) {
-                    buttonG[rows + 2][cols].setEnabled(true);
-                    buttonG[rows + 2][cols].setText("+");
+         for (rows = 0; rows <= 7; rows++) {
+             for (cols = 0; cols <= 7; cols++) {
+                if (buttonG[rows][cols].getIcon() == hod){
+                    okG = true;
                 }
-            }
-            if (cols > 0) { //сдвиг влево по столбцам
-                if (buttonG[rows][cols - 1] == white && round) {
-                    buttonG[rows][cols - 2].setEnabled(true);
-                    buttonG[rows][cols - 2].setText("+");
+                if (buttonG[rows][cols].getIcon() == ishod){
+                    okY = true;
                 }
+             }if (okG){break;}
+         }
 
-                if (buttonG[rows][cols - 1] == black && round) {
-                    buttonG[rows][cols - 2].setEnabled(true);
-                    buttonG[rows][cols - 2].setText("+");
-                }
-            }
-            if (cols < 8) { //сдвиг вправо по столбцам
-                if (buttonG[rows][cols + 1] == white && round) {
-                    buttonG[rows][cols + 2].setEnabled(true);
-                    buttonG[rows][cols + 2].setText("+");
-                }
+         if (!okG && okY){
+             plateStep();
+             }
 
-                if (buttonG[rows][cols + 1] == black && round) {
-                    buttonG[rows][cols + 2].setEnabled(true);
-                    buttonG[rows][cols + 2].setText("+");
-                }
-            }
-            if (cols > 0 && rows > 0) {
-                if (buttonG[rows - 1][cols - 1] == white && round) {
-                    buttonG[rows - 2][cols - 2].setEnabled(true);
-                    buttonG[rows - 2][cols - 2].setText("+");
-                }
+         if (!okG && !okY) {
+             if (colBlack > colWhite) {
+                 players.setText("Win Black");
+             } else if (colBlack < colWhite) {
+                 players.setText("Win White");
+             } else {
+                 players.setText("Draw");
+             }
+         }
+     }
 
-                if (buttonG[rows - 1][cols - 1] == black && round) {
-                    buttonG[rows - 2][cols - 2].setEnabled(true);
-                    buttonG[rows - 2][cols - 2].setText("+");
-                }
+    private void winBasRes(){
+        score.setText("Score");
+        players.setText("Black");
+        for (rows = 0; rows < 8; rows++) {
+            for (cols = 0; cols < 8; cols++) {
+                buttonG[rows][cols].setIcon(ishod);
             }
-            if (cols < 8 && rows < 8) {
-                if (buttonG[rows + 1][cols + 1] == white && round) {
-                    buttonG[rows + 2][cols + 2].setEnabled(true);
-                    buttonG[rows + 2][cols + 2].setText("+");
-                }
-
-                if (buttonG[rows + 1][cols + 1] == black && round) {
-                    buttonG[rows + 2][cols + 2].setEnabled(true);
-                    buttonG[rows + 2][cols + 2].setText("+");
-                }
-            }
-            if (cols < 8 && rows > 0) {
-                if (buttonG[rows - 1][cols + 1] == white && round) {
-                    buttonG[rows - 2][cols + 2].setEnabled(true);
-                    buttonG[rows - 2][cols + 2].setText("+");
-                }
-
-                if (buttonG[rows - 1][cols + 1] == black && round) {
-                    buttonG[rows - 2][cols + 2].setEnabled(true);
-                    buttonG[rows - 2][cols + 2].setText("+");
-                }
-            }
-            if (cols > 0 && rows < 8) {
-                if (buttonG[rows + 1][cols - 1] == white && round) {
-                    buttonG[rows + 2][cols - 2].setEnabled(true);
-                    buttonG[rows + 2][cols - 2].setText("+");
-                }
-
-                if (buttonG[rows + 1][cols - 1] == black && round) {
-                    buttonG[rows + 2][cols - 2].setEnabled(true);
-                    buttonG[rows + 2][cols - 2].setText("+");
-                }
-            }
-
+        }
+        buttonG[3][3].setIcon(white);
+        buttonG[3][3].setEnabled(true);
+        buttonG[3][4].setIcon(black);
+        buttonG[3][4].setEnabled(true);
+        buttonG[4][3].setIcon(black);
+        buttonG[4][3].setEnabled(true);
+        buttonG[4][4].setIcon(white);
+        buttonG[4][4].setEnabled(true);
+        buttonG[3][2].setIcon(hod);
+        buttonG[3][2].setEnabled(true);
+        buttonG[2][3].setIcon(hod);
+        buttonG[2][3].setEnabled(true);
+        buttonG[5][4].setIcon(hod);
+        buttonG[5][4].setEnabled(true);
+        buttonG[4][5].setIcon(hod);
+        buttonG[4][5].setEnabled(true);
+        round = true;
     }
-
-
-
-
-    void stepBlack(){
-
-      /**  Boolean b;
-        Если b=true(включить),Если b=false(выключить);
-        jButton2.setEnabled(b);
-       также таймер обозначит на минуту в score
-       определение ходов используя операции с массивом, определить адрес и значения в клетках рядом, определить в какие клетки можно поставить фишку.
-       А именно если клетка рядом пустая, если клетка рядом занята белыми, если клетка рядом занята чёрными. Заблокировать клетки далёкие.
-       Не использовать mouseListener, программа сама определяет возможные ходы, помечая клетки цветом. добавление иконок на кнопку можно реализовать с помощью метода действия при нажатии кнопки.
-       После того как походил игрок, необходимо переопределить иконки для клеток.
-
-
-       */
-    }
-
-    void stepWhite(){
-
-    }
-
-
 }
