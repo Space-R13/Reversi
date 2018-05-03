@@ -399,6 +399,7 @@ public class WindowBasic extends JFrame implements ActionListener{
             update(coorS, player);
         }
 
+        // вниз влево
         if(coorX < 6 && coorY > 1){
             if (buttonG[coorX + 1][coorY - 1].getIcon() == icn2){
                 coorS[0][0] = coorX + 1;
@@ -490,13 +491,13 @@ public class WindowBasic extends JFrame implements ActionListener{
              }
          }
          score.setText("B:" + Integer.toString(colBlack) + " - " + "W:" + Integer.toString(colWhite));
-             for (rows = 0; rows <= 7; rows++) {
-                 for (cols = 0; cols <= 7; cols++) {
-                     if (buttonG[rows][cols].getIcon() != black && buttonG[rows][cols].getIcon() != white ) {
-                         step(rows, cols, round, true);
-                     }
+         for (rows = 0; rows <= 7; rows++) {
+             for (cols = 0; cols <= 7; cols++) {
+                 if (buttonG[rows][cols].getIcon() != black && buttonG[rows][cols].getIcon() != white ) {
+                     step(rows, cols, round, true);
                  }
              }
+         }
 
          for (rows = 0; rows <= 7; rows++) {
              for (cols = 0; cols <= 7; cols++) {
